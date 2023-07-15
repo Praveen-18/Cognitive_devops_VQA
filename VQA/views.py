@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Registration, Question
 from django.contrib.auth.models import User
-from .utils.sample import answer_question
+from .VQA_Image_Classifier.sample import answer_question, classify_image
 
 
 def index(request):
@@ -64,6 +64,6 @@ def vqa(request):
             # Call the function from the other file
             answer = answer_question(my_model.image.name, questions)
             print(answer)  # Print the answer for testing
-            return render(request, 'VQA/vqa.html', {'name': request.user.username.upper(), 'answer': answer})
+            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer})
 
-    return render(request, 'VQA/vqa.html', {'name': request.user.username.upper()})
+    return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper()})

@@ -24,6 +24,10 @@ Virtual Q&A in Healthcare is a web-based platform that allows users to upload me
 - Virtual consultant integration: Users can seek expert advice and guidance through virtual consultation with healthcare professionals.
 - Additional features: The system offers health tips, precautions, causes of conditions, and a blog section for enhanced user experience.
 
+## Workflow
+
+![Workflow](https://github.com/Praveen-18/Cognitive_devops_VQA/blob/master/Architecture/Visual%20Question%20and%20Answer%20architecture/workflow.png)
+
 ## Tech Stack
 - Programming Language: Python
 - Computer Vision: OpenCV

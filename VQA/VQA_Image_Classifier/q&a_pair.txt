@@ -9,6 +9,7 @@ synpic38317|is this a contrast or noncontrast ct?|noncontrast
 synpic22829|was the ct scan taken with contrast?|yes
 synpic39477|what is the mr weighting in this image?|t2
 synpic16333|what type of imaging modality is shown?|ct w/contrast (iv)
+synpic16333|what plane is this ultrasound in?|longitudinal
 synpic60053|what type of imaging does this represent?|xr - plain film
 synpic28004|is this a ct scan?|yes
 synpic51949|is this an mri image?|no

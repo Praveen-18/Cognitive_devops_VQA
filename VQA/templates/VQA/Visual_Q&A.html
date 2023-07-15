@@ -128,6 +128,40 @@
                         </div>
                     </div>
                 </div>
+{#                <div class="col-12 grid-margin stretch-card">#}
+{#                    <div class="card">#}
+{#                        <div class="card-body">#}
+{#                            <h4 class="card-title">ANSWER</h4>#}
+{#                            <p class="card-description">#}
+{#                                {% if answer %}#}
+{#                                    {{ answer }}#}
+{#                                {% else %}#}
+{#                                    No answer available.#}
+{#                                {% endif %}#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body text-center">
+{#            <h4 class="card-title" style="font-size: 24px;">Answer</h4>#}
+            <p class="card-description" style="font-size: 20px;">
+                {% if answer %}
+                    <strong>Question:</strong> {{ question }}<br>
+                    <br>
+{#                    <strong>Image:</strong><br>#}
+                    <img src="{{ image_url }}" alt="Image" style="width: 25%; height: 50%;"><br>
+                    <br>
+                    <strong>Answer:</strong> {{ answer }}
+                {% else %}
+                    No answer available.
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
@@ -203,3 +237,11 @@ $(document).ready(function() {
 </body>
 
 </html>
+
+
+{#<div class="card-body">#}
+{#                                    <div class="form-group">#}
+{#                                    <label for="exampleInputName1">ANSWER</label>#}
+{#                                    <input type="text" class="form-control" id="exampleInputName1" placeholder="{{ answer }}">#}
+{#                                </div>#}
+{#                                </div>#}

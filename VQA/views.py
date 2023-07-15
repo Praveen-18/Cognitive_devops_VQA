@@ -19,6 +19,7 @@ def userlogin(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         curr_user = authenticate(username=username, password=password)
+        print(username,password)
         if curr_user is not None:
             login(request, curr_user)
             if curr_user.is_superuser:
@@ -26,6 +27,7 @@ def userlogin(request):
             else:
                 return redirect('index')  # Redirect to the desired page after successful login
         else:
+            print("Invalid credentials")
             return render(request, 'VQA/login.html')
     else:
         return render(request, 'VQA/login.html')
@@ -39,21 +41,23 @@ def logoutUser(request):
 
 def register(request):
     if request.method == 'POST':
+        print("Inside register")
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print("inside register : - ",username, password)
         curr_val = Registration(username=username, password=password)
         curr_val.save()
         user = User.objects.create_user(username=username, password=password)
         user.save()
         print(curr_val)
-        return render(request, 'VQA/register.html')
-    else:
-        return render(request, 'VQA/register.html')
+        return render(request, 'VQA/login.html')
+    return render(request, 'VQA/register.html')
 
 
 def vqa(request):
     if request.method == 'POST':
         questions = request.POST.get('questions')
+        print(questions)
         image = request.FILES.get('image')
         if image:
             # Add image to the database
@@ -62,8 +66,13 @@ def vqa(request):
             my_model.save()
 
             # Call the function from the other file
-            answer = answer_question(my_model.image.name, questions)
-            print(answer)  # Print the answer for testing
-            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer})
+            image_path = my_model.image.path
+            print(image_path)
+            answer = classify_image(image_path, questions)
+            # print(questions)
+            # print(answer)
+            image_url = my_model.image.url if my_model.image else None
+            # print(answer)  # Print the answer for testing
+            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer,'question': questions,'image_url': image_url})
 
     return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper()})

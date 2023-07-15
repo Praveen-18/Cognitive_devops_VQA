@@ -36,7 +36,7 @@ image_transforms = transforms.Compose([
 ])
 
 
-def classify_image(image_path):
+def classify_image(image_path,question):
     with open(pickle_file, 'rb') as f:
         rf_classifier = pickle.load(f)
 
@@ -48,7 +48,8 @@ def classify_image(image_path):
         features = feature_extractor(image)
         features = features.view(features.size(0), -1).cpu().numpy()
     predicted_label = rf_classifier.predict([features.flatten()])[0]
-    return predicted_label
+    print(predicted_label)
+    return answer_question(predicted_label, question)
 
 
 def answer_question(image_name, question):

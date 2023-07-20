@@ -1,6 +1,8 @@
 <div align="center">
 
+<img src = "https://github.com/Praveen-18/Cognitive_devops_VQA/blob/master/VQA/static/images/cd_logo-removebg-preview%20(1).png"></img>
 # Virtual Q&A in Healthcare - Cognitive Devops
+
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Framework](https://img.shields.io/badge/Framework-Django-092E20.svg)
@@ -75,6 +77,8 @@ Special thanks to the following contributors for their valuable contributions to
 - [Sridhar V](https://github.com/srid20ad047)
 - [Jaswanth B](https://github.com/JASWANTHJET)
 
+## NOTE
+Our model files are not uploaded to GitHub yet. Please DM us for access to the models.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

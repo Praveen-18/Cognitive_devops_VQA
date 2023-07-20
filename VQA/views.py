@@ -69,9 +69,12 @@ def vqa(request):
             image_path = my_model.image.path
             print(image_path)
             answer = classify_image(image_path, questions)
+            print(answer)
             # print(questions)
             # print(answer)
             image_url = my_model.image.url if my_model.image else None
+            if answer == "no":
+                answer = "Apologies! 🙇‍♂️ Our cognitive devops team is still sharpening the AI's knowledge, and unfortunately, it hasn't learned about this specific input yet. Feel free to explore other questions or images, and we'll strive to improve the AI's capabilities for next time!"
             # print(answer)  # Print the answer for testing
             return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer,'question': questions,'image_url': image_url})
 

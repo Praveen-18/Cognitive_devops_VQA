@@ -9,6 +9,6 @@ urlpatterns = [
     path('register/',views.register,name='register'),
     path('logoutUser/',views.logoutUser,name='logoutUser'),
     path('vqa/',views.vqa,name='vqa'),
-    # path('',views.index,name='index'),
+    path('bmi/',views.bmi_calculator,name='bmi_calculator'),
 
 ]

@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Registration, Question
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
-
+import json
 
 def index(request):
     name = request.user.username.upper()
@@ -79,3 +79,45 @@ def vqa(request):
             return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer,'question': questions,'image_url': image_url})
 
     return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper()})
+
+
+def bmi_calculator(request):
+    if request.method == 'POST':
+        print("Inside BMI")
+        feet = float(request.POST.get('feet'))
+        weight = float(request.POST.get('weight'))
+        height_in_cm = feet * 30.48
+        bmi = calculate_bmi(height_in_cm, weight)
+        category = get_bmi_category(bmi)
+        print(height_in_cm, weight, bmi, category)
+        result = {
+            'height': round(height_in_cm, 2),
+            'weight': weight,
+            'bmi': bmi,
+            'category': category
+        }
+        return HttpResponse(json.dumps(result), content_type='application/json')
+
+    return render(request, 'VQA/BMI_Calculator.html', {'name': request.user.username.upper()})
+
+
+
+
+def calculate_bmi(height, weight):
+    # BMI Formula: BMI = weight (kg) / (height (m) * height (m))
+    print(height, weight)
+    height_in_meters = height / 100
+    bmi = weight / (height_in_meters * height_in_meters)
+    print(round(bmi, 2))
+    return round(bmi, 1)
+
+
+def get_bmi_category(bmi):
+    if bmi < 18.5:
+        return 'UNDERWEIGHT'
+    elif 18.5 <= bmi <= 24.9:
+        return 'NORMAL WEIGHT'
+    elif 25 <= bmi < 29.9:
+        return 'OVERWEIGHT'
+    else:
+        return 'OBESE'

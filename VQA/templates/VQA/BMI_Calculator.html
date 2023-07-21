@@ -18,6 +18,26 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
+    <style>
+        /* Add some basic styles for the animated card */
+        .animated-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 300px;
+            margin: 20px auto;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        /* Add styles to show the animated card after calculation */
+        .animated-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
 <div class="container-scroller">
@@ -87,7 +107,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'bmi_calculator' %}">
-                        <i class="mdi mdi-camera-enhance menu-icon"></i>
+                        <i class="mdi mdi-calculator-variant menu-icon"></i>
                         <span class="menu-title">BMI CALCULATOR</span>
                     </a>
                 </li>
@@ -95,16 +115,42 @@
         </nav>
         <!-- partial -->
         <div class="main-panel">
-            <div class="content-wrapper" style="display: flex; flex-direction: column; align-items: center;">
-                <h3>COMING SOON! 🚧 OUR <b style="color: #1a5fff">COGNITIVE DEVOPS TEAM</b> IS WORKING ON THIS PAGE.
-                    <br>
-                    <div style="text-align: center">STAY TUNED FOR UPDATES!</div>
-                </h3>
-                <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
-                    <img src="{% static 'images/heart12.png' %}" alt="under construction"
-                         style="max-width: 80%; max-height: 100%;">
+            <div class="content-wrapper">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="text-align: center;font-size: xxx-large ; color: #0d57ff">BMI CALCULATOR</h4>
+                            <p class="card-description">
+                                <br>
+                            </p>
+                            <form id="bmiForm" class="forms-sample" method="post" action="{% url 'bmi_calculator' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="exampleInputName1">HEIGHT (IN FEET)</label>
+                                    <input type="number" class="form-control" placeholder="FEET"
+                                           name="feet" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">WEIGHT (IN KG)</label>
+                                    <input type="number" class="form-control" placeholder="KG"
+                                           name="weight" step="0.01" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary mr-2">SUBMIT</button>
+                                <button class="btn btn-light">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <h3 style="font-weight: bold;">EMPOWERING HEALTHCARE WITH COGNITIVE DEVOPS</h3>
+
+                <div id="resultCard" class="animated-card" style="background-color: #1b8dbf">
+                    <h2 style="color: white">RESULT</h2>
+                    <p style="color: cyan;text-align: center">Your Height:  <span id="heightValue" style="color:black;"></span></p>
+                    <p style="color: cyan;text-align: center">Your Weight:  <span id="weightValue" style="color:black;"></span></p>
+                    <p style="color: cyan;text-align: center">Your BMI:   <span id="bmiValue" style="color:black;"></span></p>
+{#                    <p style="color: #1a5fff;text-align: center">BMI Category: {% if 'OVERWEIGHT' or 'OBESE' %}<span id="bmiCategory" style="color: red"></span>{% elif 'NORMAL WEIGHT' %}<span id="bmiCategory" style="color: yellow"></span>{% elif 'UNDERWEIGHT' %}<span id="bmiCategory" style="color: green"></span>{% endif %}</p>#}
+                    <p style="color: cyan;text-align: center">BMI Category:  <span id="bmiCategory" style="color:black;"></span></p>
+
+                </div>
             </div>
         </div>
 
@@ -113,6 +159,55 @@
     <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
+
+
+<script>
+    document.getElementById("bmiForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var formData = new FormData(event.target);
+
+    // Convert height to centimeters before sending to the server
+    var feet = parseFloat(formData.get('feet'));
+    var inches = parseFloat(formData.get('inches'));
+    var height_in_cm = (feet * 30.48) + (inches * 2.54);
+    formData.set('height', height_in_cm); // Update the 'height' value in the formData
+
+    fetch(event.target.action, {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Update the BMI result on the animated card
+            document.getElementById("heightValue").innerText = feet + " feet ";
+            document.getElementById("weightValue").innerText = data.weight + " kg";
+            document.getElementById("bmiValue").innerText = data.bmi;
+
+            // Get the BMI category element
+            var bmiCategoryElement = document.getElementById("bmiCategory");
+
+            // Update the BMI category text
+            bmiCategoryElement.innerText = data.category;
+
+            // Apply the appropriate color to the BMI category text based on the category
+            if (data.category === 'OVERWEIGHT' || data.category === 'OBESE') {
+                bmiCategoryElement.style.color = 'red';
+            } else if (data.category === 'NORMAL WEIGHT') {
+                bmiCategoryElement.style.color = 'yellow';
+            } else if (data.category === 'UNDERWEIGHT') {
+                bmiCategoryElement.style.color = 'green';
+            }
+
+            // Show the animated card
+            var resultCard = document.getElementById("resultCard");
+            resultCard.classList.add("show");
+        });
+});
+
+
+
+</script>
+
 
 <!-- plugins:js -->
 <script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>

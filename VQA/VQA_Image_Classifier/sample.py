@@ -10,10 +10,12 @@ import joblib
 import collections
 import tempfile
 import pickle
+from collections import OrderedDict
+
 
 # Paths to your joblib files
-pickle_file_1 = "C:\\Users\\91733\\PycharmProjects\\Cognitive_devops_vqa\\VQA\\VQA_Image_Classifier\\image_classifier1.joblib"
-pickle_file_2 = "C:\\Users\\91733\\PycharmProjects\\Cognitive_devops_vqa\\VQA\\VQA_Image_Classifier\\image_classifier2.joblib"
+pickle_file_1 = "VQA/VQA_Image_Classifier/image_classifier1.joblib"
+pickle_file_2 = "VQA/VQA_Image_Classifier/image_classifier2.joblib"
 
 
 # Initialize the feature extractor
@@ -84,5 +86,4 @@ def classify_image(image_path , question):
     else:
         return "no"
 
-print("OK")
 

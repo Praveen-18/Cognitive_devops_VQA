@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Majestic Admin</title>
+    <title>COGNITIVE DEVOPS</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
@@ -17,7 +17,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
 </head>
 <body>
 <div class="container-scroller">
@@ -26,9 +26,9 @@
         <div class="navbar-brand-wrapper d-flex justify-content-center">
             <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
                 <a class="navbar-brand brand-logo" href="index.html">
-                    <img src="{% static 'images/logo.svg' %}" alt="logo"/></a>
+                    <img src="{% static 'images/Cog1.png' %}" alt="logo"/></a>
                 <a class="navbar-brand brand-logo-mini" href="index.html">
-                    <img src="{% static 'images/logo-mini.svg' %}" alt="logo"/></a>
+                    <img src="{% static 'images/heart.png' %}" alt="logo"/></a>
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-sort-variant"></span>
                 </button>
@@ -85,6 +85,12 @@
                         <span class="menu-title">VisuAsk</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bmi_calculator' %}">
+                        <i class="mdi mdi-camera-enhance menu-icon"></i>
+                        <span class="menu-title">BMI CALCULATOR</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- partial -->
@@ -120,58 +126,59 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-center">
-          <img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100%; height: auto; margin: 0 auto;">
-        </div>
+                                    <img id="imagePreview" src="#" alt="Preview"
+                                         style="display: none; width: 300px; height: 300px; margin: 0 auto;">
+                                </div>
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                 <button class="btn btn-light">Cancel</button>
                             </form>
                         </div>
                     </div>
                 </div>
-{#                <div class="col-12 grid-margin stretch-card">#}
-{#                    <div class="card">#}
-{#                        <div class="card-body">#}
-{#                            <h4 class="card-title">ANSWER</h4>#}
-{#                            <p class="card-description">#}
-{#                                {% if answer %}#}
-{#                                    {{ answer }}#}
-{#                                {% else %}#}
-{#                                    No answer available.#}
-{#                                {% endif %}#}
-{#                            </p>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
+                {#                <div class="col-12 grid-margin stretch-card">#}
+                {#                    <div class="card">#}
+                {#                        <div class="card-body">#}
+                {#                            <h4 class="card-title">ANSWER</h4>#}
+                {#                            <p class="card-description">#}
+                {#                                {% if answer %}#}
+                {#                                    {{ answer }}#}
+                {#                                {% else %}#}
+                {#                                    No answer available.#}
+                {#                                {% endif %}#}
+                {#                            </p>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
                 <div class="col-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body text-center">
-{#            <h4 class="card-title" style="font-size: 24px;">Answer</h4>#}
-            <p class="card-description" style="font-size: 20px;">
-                {% if answer %}
-                    <strong>Question:</strong> {{ question }}<br>
-                    <br>
-{#                    <strong>Image:</strong><br>#}
-                    <img src="{{ image_url }}" alt="Image" style="width: 25%; height: 50%;"><br>
-                    <br>
-                    <strong>Answer:</strong> {{ answer }}
-                {% else %}
-                    No answer available.
-                {% endif %}
-            </p>
-        </div>
-    </div>
-</div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            {#            <h4 class="card-title" style="font-size: 24px;">Answer</h4>#}
+                            <p class="card-description" style="font-size: 20px;">
+                                {% if answer %}
+                                    <strong>Question:</strong> {{ question }}<br>
+                                    <br>
+                                    {#                    <strong>Image:</strong><br>#}
+                                    <img src="{{ image_url }}" alt="Image" style="width: 25%; height: 50%;"><br>
+                                    <br>
+                                    <strong>Answer:</strong> {{ answer }}
+                                {% else %}
+                                    No answer available.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a
-                            href="https://www.urbanui.com/" target="_blank"></a>. All rights reserved.</span>
-                    {#            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>#}
-                </div>
-            </footer>
+            {#            <footer class="footer">#}
+            {#                <div class="d-sm-flex justify-content-center justify-content-sm-between">#}
+            {#                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a#}
+            {#                            href="https://www.urbanui.com/" target="_blank"></a>. All rights reserved.</span>#}
+            {#            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>#}
+            {#                </div>#}
+            {#            </footer>#}
             <!-- partial -->
         </div>
         <!-- main-panel ends -->
@@ -194,25 +201,25 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-  $('#uploadImageButton').click(function() {
-    $('#imageUpload').click();
-  });
+    $(document).ready(function () {
+        $('#uploadImageButton').click(function () {
+            $('#imageUpload').click();
+        });
 
-  $('#imageUpload').change(function() {
-    var input = this;
-    var info = $('#uploadImageInfo');
-    info.val(input.files[0] ? input.files[0].name : '');
+        $('#imageUpload').change(function () {
+            var input = this;
+            var info = $('#uploadImageInfo');
+            info.val(input.files[0] ? input.files[0].name : '');
 
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#imagePreview').attr('src', e.target.result).show();
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  });
-});
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
 </script>
 
 <!-- plugins:js -->

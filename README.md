@@ -4,7 +4,6 @@
 # Virtual Q&A in Healthcare - Cognitive Devops
 
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Framework](https://img.shields.io/badge/Framework-Django-092E20.svg)
 ![Cloud](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4.svg)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Models-orange.svg)
@@ -80,5 +79,3 @@ Special thanks to the following contributors for their valuable contributions to
 ## NOTE
 Our model files are not uploaded to GitHub yet. Please DM us for access to the models.
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

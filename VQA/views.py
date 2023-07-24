@@ -5,6 +5,9 @@ from .models import Registration, Question
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
 import json
+from VQA.svm_face_recognation.datasetCreation import VideoCamera, imageCapture
+from django.http import StreamingHttpResponse
+from VQA.svm_face_recognation.videocapture import Video , datacreation , lis , refresh
 
 def index(request):
     name = request.user.username.upper()
@@ -121,3 +124,48 @@ def get_bmi_category(bmi):
         return 'OVERWEIGHT'
     else:
         return 'OBESE'
+
+def blog(request):
+    return render(request, 'VQA/blog.html', {'name': request.user.username.upper()})
+
+def consultant(request):
+    return render(request, 'VQA/consultant.html', {'name': request.user.username.upper()})
+
+def blooddonation(request):
+    return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper()})
+
+def video_feed(request):
+    return StreamingHttpResponse(imageCapture(VideoCamera() , "Praveen S" , 1), content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+def video_feed1(request):
+    return StreamingHttpResponse(datacreation(Video()), content_type='multipart/x-mixed-replace; boundary=frame')
+
+def stop_streaming1(request):
+    if request.method == "POST":
+        print("PRINTING")
+        camera = Video()
+        camera.stop_streaming()
+        return render(request, 'vqa/login.html', {"status": True, "username": request.user , "lis" : []})
+    l = list(lis())
+    print(l)
+    refresh()
+    print(l)
+    return render(request, 'vqa/index.html', {"status": False, "username": request.user , "lis" : l})
+
+
+def stop_streaming(request):
+    if request.method == "POST":
+        print("PRINTING")
+        # camera = VideoCamera()
+        # camera.stop_streaming()
+        return render(request, 'vqa/register.html', {"status": True, "username": request.user})
+    return render(request, 'vqa/login.html', {"status": False, "username": request.user})
+
+def uncapture(request):
+    if request.method == "POST":
+        return redirect('stop_streaming')
+
+def uncapture1(request):
+    if request.method == "POST":
+        return redirect('stop_streaming1')

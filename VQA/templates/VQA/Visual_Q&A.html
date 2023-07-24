@@ -87,8 +87,26 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'bmi_calculator' %}">
-                        <i class="mdi mdi-camera-enhance menu-icon"></i>
+                        <i class="mdi mdi-calculator-variant menu-icon"></i>
                         <span class="menu-title">BMI CALCULATOR</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog' %}">
+                        <i class="mdi mdi-all-inclusive menu-icon"></i>
+                        <span class="menu-title">REFERENCE BOLG</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'consultant' %}">
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
+                        <span class="menu-title">CONSULTANT</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blooddonation' %}">
+                        <i class="mdi mdi-water menu-icon"></i>
+                        <span class="menu-title">HEMO CONNECT</span>
                     </a>
                 </li>
             </ul>
@@ -104,8 +122,7 @@
                             <p class="card-description">
                                 <br>
                             </p>
-                            <form class="forms-sample" method="post" action="{% url 'vqa' %}"
-                                  enctype="multipart/form-data">
+                            <form class="forms-sample" method="post" action="{% url 'vqa' %}" id="vqa" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="exampleInputName1">QUESTION</label>
@@ -129,26 +146,12 @@
                                     <img id="imagePreview" src="#" alt="Preview"
                                          style="display: none; width: 300px; height: 300px; margin: 0 auto;">
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" class="btn btn-primary mr-2" onclick="openPreloader()">Submit</button>
                                 <button class="btn btn-light">Cancel</button>
                             </form>
                         </div>
                     </div>
                 </div>
-                {#                <div class="col-12 grid-margin stretch-card">#}
-                {#                    <div class="card">#}
-                {#                        <div class="card-body">#}
-                {#                            <h4 class="card-title">ANSWER</h4>#}
-                {#                            <p class="card-description">#}
-                {#                                {% if answer %}#}
-                {#                                    {{ answer }}#}
-                {#                                {% else %}#}
-                {#                                    No answer available.#}
-                {#                                {% endif %}#}
-                {#                            </p>#}
-                {#                        </div>#}
-                {#                    </div>#}
-                {#                </div>#}
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body text-center">
@@ -170,22 +173,21 @@
                 </div>
 
             </div>
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            {#            <footer class="footer">#}
-            {#                <div class="d-sm-flex justify-content-center justify-content-sm-between">#}
-            {#                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a#}
-            {#                            href="https://www.urbanui.com/" target="_blank"></a>. All rights reserved.</span>#}
-            {#            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>#}
-            {#                </div>#}
-            {#            </footer>#}
-            <!-- partial -->
         </div>
         <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
 </div>
+<div style="position: fixed ; left: 54% ; top : 52% ; width: 50px ; height : 50px ; background: black ; display: none" id = "preload">
+<img src="{% static 'images/cd_logo-removebg-preview (1).png' %}">
+
+</div>
 <!-- container-scroller -->
+<script>
+    function openPreloader() {
+        document.getElementById("preload").style.display = "block";
+    }
+</script>
 <script>
     function triggerImageUpload() {
         document.getElementById('imageUpload').click();
@@ -244,11 +246,3 @@
 </body>
 
 </html>
-
-
-{#<div class="card-body">#}
-{#                                    <div class="form-group">#}
-{#                                    <label for="exampleInputName1">ANSWER</label>#}
-{#                                    <input type="text" class="form-control" id="exampleInputName1" placeholder="{{ answer }}">#}
-{#                                </div>#}
-{#                                </div>#}

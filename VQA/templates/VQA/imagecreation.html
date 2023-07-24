@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cognitive Devops</title>
+</head>
+<body>
+<div class="col-lg-6  d-flex flex-row">
+              <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                <div class="col-sm-12 ">
+                            <div class="bg-light rounded h-100 p-4">
+                                <br>
+                                <h3 class="card-title" style="text-align: center;color: cyan">Login</h3>
+                                <br>
+                            <div  id="result_dis">
+
+                                    {% if status == True %}
+                                        <div  id="video_div">
+                                     <img src="{% url 'video_feed' %}" id = "video_result" >
+                                        </div>
+                                    {% endif %}
+                            {% if lis %}
+                                <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Recent Updates</h6>
+{#                        <a href="{% url 'attendance_status' %}" style="color: #85CDFD">Show All</a>#}
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col" style="text-align: center">Employee Id</th>
+{#                                    <th scope="col" style="text-align: center">Employee Name</th>#}
+{#                                    <th scope="col" style="text-align: center">Gender</th>#}
+{#                                    <th scope="col" style="text-align: center">Age</th>#}
+{#                                    <th scope="col" style="text-align: center">Address</th>#}
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in lis %}
+                                    {% if i is not "Unkonwon" %}
+                                <tr>
+                                    <td style="text-align: center">{{ i }}</td>
+{#                                    <td style="text-align: center">{{ i.employee_name }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_gender }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_age }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_location }}</td>#}
+
+
+                                </tr>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                            {% endif %}
+                            <div style="margin: auto;">
+                                {% if status != True %}
+                                <form method="POST" action="{% url 'stop_streaming1' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" >Start Recognition</button>
+                                </form>
+                                {% endif %}
+                                {% if status == True %}
+                                <form method="POST" action="{% url 'uncapture' %}">
+                                    {% csrf_token %}
+                                    <button class="btn  btn-rounded btn-fw" type="submit" style="background-color: #85CDFD ; color:black">Stop Recognition</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- Footer End -->
+        </div>
+            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2023  All rights reserved.</p>
+          </div>
+
+</body>
+</html>

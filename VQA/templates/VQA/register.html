@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Majestic Admin</title>
+  <title>COGNITIVE DEVOPS</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
@@ -16,7 +16,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+  <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
               <div class="brand-logo">
                 <img src="{% static 'images/logo.svg' %}" alt="logo">
               </div>
-              <h4>REGISTER HERE ?</h4>
+              <h4>Login</h4>
               <h6 class="font-weight-light">Join us today! It takes only few steps</h6>
               <form class="pt-3" method="POST" action="{% url 'register' %}">
                   {% csrf_token %}
@@ -64,7 +64,88 @@
               </form>
             </div>
           </div>
-          <div class="col-lg-6 register-half-bg d-flex flex-row">
+          <div class="col-lg-6  d-flex flex-row">
+              <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                <div class="col-sm-12 ">
+                            <div class="bg-light rounded h-100 p-4">
+                                <br>
+                                <h3 class="card-title" style="text-align: center;color: cyan">Login</h3>
+                                <br>
+                            <div  id="result_dis">
+
+                                    {% if status == True %}
+                                        <div  id="video_div">
+                                     <img src="{% url 'video_feed' %}" id = "video_result" >
+                                        </div>
+                                    {% endif %}
+                            {% if lis %}
+                                <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Recent Updates</h6>
+{#                        <a href="{% url 'attendance_status' %}" style="color: #85CDFD">Show All</a>#}
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col" style="text-align: center">Employee Id</th>
+{#                                    <th scope="col" style="text-align: center">Employee Name</th>#}
+{#                                    <th scope="col" style="text-align: center">Gender</th>#}
+{#                                    <th scope="col" style="text-align: center">Age</th>#}
+{#                                    <th scope="col" style="text-align: center">Address</th>#}
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in lis %}
+                                    {% if i is not "Unkonwon" %}
+                                <tr>
+                                    <td style="text-align: center">{{ i }}</td>
+{#                                    <td style="text-align: center">{{ i.employee_name }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_gender }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_age }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_location }}</td>#}
+
+
+                                </tr>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                            {% endif %}
+                            <div style="margin: auto;">
+                                {% if status != True %}
+                                <form method="POST" action="{% url 'stop_streaming1' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" >Start Recognition</button>
+                                </form>
+                                {% endif %}
+                                {% if status == True %}
+                                <form method="POST" action="{% url 'uncapture' %}">
+                                    {% csrf_token %}
+                                    <button class="btn  btn-rounded btn-fw" type="submit" style="background-color: #85CDFD ; color:black">Stop Recognition</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- Footer End -->
+        </div>
             <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2023  All rights reserved.</p>
           </div>
         </div>
@@ -74,6 +155,87 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+<div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                <div class="col-sm-12 ">
+                            <div class="bg-light rounded h-100 p-4">
+                                <br>
+                                <h3 class="card-title" style="text-align: center;color: cyan">Login</h3>
+                                <br>
+                            <div  id="result_dis">
+
+                                    {% if status == True %}
+                                        <div  id="video_div">
+                                     <img src="{% url 'video_feed' %}" id = "video_result" >
+                                        </div>
+                                    {% endif %}
+                            {% if lis %}
+                                <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Recent Updates</h6>
+{#                        <a href="{% url 'attendance_status' %}" style="color: #85CDFD">Show All</a>#}
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col" style="text-align: center">Employee Id</th>
+{#                                    <th scope="col" style="text-align: center">Employee Name</th>#}
+{#                                    <th scope="col" style="text-align: center">Gender</th>#}
+{#                                    <th scope="col" style="text-align: center">Age</th>#}
+{#                                    <th scope="col" style="text-align: center">Address</th>#}
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in lis %}
+                                    {% if i is not "Unkonwon" %}
+                                <tr>
+                                    <td style="text-align: center">{{ i }}</td>
+{#                                    <td style="text-align: center">{{ i.employee_name }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_gender }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_age }}</td>#}
+{#                                    <td style="text-align: center">{{ i.employee_location }}</td>#}
+
+
+                                </tr>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                            {% endif %}
+                            <div style="margin: auto;">
+                                {% if status != True %}
+                                <form method="POST" action="{% url 'stop_streaming1' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" >Start Recognition</button>
+                                </form>
+                                {% endif %}
+                                {% if status == True %}
+                                <form method="POST" action="{% url 'uncapture' %}">
+                                    {% csrf_token %}
+                                    <button class="btn  btn-rounded btn-fw" type="submit" style="background-color: #85CDFD ; color:black">Stop Recognition</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- Footer End -->
+        </div>
   <!-- plugins:js -->
   <script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>
   <!-- endinject -->

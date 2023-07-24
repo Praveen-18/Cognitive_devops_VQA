@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>COGNITIVE DEVOPS</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex justify-content-center">
+            <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="{% static 'images/Cog1.png' %}"
+                                                                          alt="logo"/></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{% static 'images/heart.png' %}"
+                                                                               alt="logo"/></a>
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-sort-variant"></span>
+                </button>
+            </div>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <ul class="navbar-nav mr-lg-4 w-100">
+                <li class="nav-item nav-search d-none d-lg-block w-100">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                <span class="input-group-text" id="search">
+                  <i class="mdi mdi-magnify"></i>
+                </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search now" aria-label="search"
+                               aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                        <img src="{% static 'images/user.png' %}" alt="profile"/>
+                        <span class="nav-profile-name">{{ name }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" href="{% url 'logoutUser' %}">
+                            <i class="mdi mdi-logout text-primary"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <i class="mdi mdi-home menu-icon"></i>
+                        <span class="menu-title">DASHBOARD</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'vqa' %}">
+                        <i class="mdi mdi-camera-enhance menu-icon"></i>
+                        <span class="menu-title">VisuAsk</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bmi_calculator' %}">
+                        <i class="mdi mdi-calculator-variant menu-icon"></i>
+                        <span class="menu-title">BMI CALCULATOR</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog' %}">
+                        <i class="mdi mdi-all-inclusive menu-icon"></i>
+                        <span class="menu-title">REFERENCE BOLG</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'consultant' %}">
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
+                        <span class="menu-title">CONSULTANT</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blooddonation' %}">
+                        <i class="mdi mdi-water menu-icon"></i>
+                        <span class="menu-title">HEMO CONNECT</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper" style="display: flex; flex-direction: column; align-items: center;">
+                <h3>COMING SOON! 🚧 OUR <b style="color: #1a5fff">COGNITIVE DEVOPS TEAM</b> IS WORKING ON THIS PAGE.
+                    <br>
+                    <div style="text-align: center">STAY TUNED FOR UPDATES!</div>
+                </h3>
+                <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                    <img src="{% static 'images/heart12.png' %}" alt="under construction"
+                         style="max-width: 80%; max-height: 100%;">
+                </div>
+                <h3 style="font-weight: bold;">EMPOWERING HEALTHCARE WITH COGNITIVE DEVOPS</h3>
+            </div>
+        </div>
+
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+<script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net/jquery.dataTables.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js' %}"></script>
+<script src="{% static 'js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'js/template.js' %}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/data-table.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'js/dataTables.bootstrap4.js' %}"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>

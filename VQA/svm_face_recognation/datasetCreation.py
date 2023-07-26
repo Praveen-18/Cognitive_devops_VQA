@@ -6,6 +6,7 @@ import os
 from VQA.svm_face_recognation.preprocessingEmbeddings import preprocessingEmbeddings
 from VQA.svm_face_recognation.trainingFaceML import trainingFaceML
 from django.shortcuts import render, redirect
+
 def imageCapture(cam , Name , Roll_Number):
     cascade = 'VQA/svm_face_recognation/haarcascade_frontalface_default.xml'
     detector = cv2.CascadeClassifier(cascade)
@@ -46,7 +47,8 @@ def imageCapture(cam , Name , Roll_Number):
     cam.stop_streaming()
     preprocessingEmbeddings()
     trainingFaceML()
-    return redirect('/')
+    redirect('register')
+
 
 
 class VideoCamera:

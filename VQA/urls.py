@@ -20,5 +20,5 @@ urlpatterns = [
     path('stop_streaming1', views.stop_streaming1, name='stop_streaming1'),
     path('uncapture1', views.uncapture1, name='uncapture1'),
     path('uncapture', views.uncapture, name='uncapture'),
-
+    path('imagecreation/' , views.imagecreation , name='imagecreation'),
 ]

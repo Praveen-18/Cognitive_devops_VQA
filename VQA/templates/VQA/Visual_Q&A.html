@@ -18,6 +18,33 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
+    <style>
+
+.preloader {
+  text-align: center;
+}
+
+.loading-symbol {
+  /* Add your loading symbol styling here */
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+    </style>
 </head>
 <body>
 <div class="container-scroller">
@@ -178,9 +205,9 @@
     </div>
     <!-- page-body-wrapper ends -->
 </div>
-<div style="position: fixed ; left: 54% ; top : 52% ; width: 50px ; height : 50px ; background: black ; display: none" id = "preload">
-<img src="{% static 'images/cd_logo-removebg-preview (1).png' %}">
-
+<div id = "preload" class="preloader" style="display: none" >
+<img src="{% static 'images/cd_logo-removebg-preview (1).png' %}" style="position: fixed ; left: 40% ; top : 28%"><br>
+    <div class="loading-text" id="loadingText" style="position: fixed ; left: 49% ; top : 78% ; color: #25a9e1">Preprocessing</div>
 </div>
 <!-- container-scroller -->
 <script>
@@ -199,6 +226,28 @@
         info.value = input.files[0] ? input.files[0].name : '';
     }
 
+
+</script>
+<script>
+    const loadingText = document.getElementById('loadingText');
+const texts = ["Preprocessing", "Feature Extraction", "Trained model", "Fitted vectorizer", "Retrieving the answer"];
+
+let index = 0;
+const interval = 5000; // 5 seconds
+
+function changeText() {
+  loadingText.textContent = texts[index];
+  index = (index + 1) % texts.length;
+}
+
+// Change text every 5 seconds
+const textChangeInterval = setInterval(changeText, interval);
+
+// Stop the text change after 25 seconds
+setTimeout(() => {
+  clearInterval(textChangeInterval);
+  loadingText.textContent = "Loading Complete!";
+}, 25000);
 
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -18,6 +18,144 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
+    <style>
+
+
+        .payments-item img.mr-3 {
+            width: 47px;
+        }
+
+        .order-list .btn {
+            border-radius: 2px;
+            min-width: 121px;
+            font-size: 13px;
+            padding: 7px 0 7px 0;
+        }
+
+        .osahan-account-page-left .nav-link {
+            padding: 18px 20px;
+            border: none;
+            font-weight: 600;
+            color: #535665;
+        }
+
+        .osahan-account-page-left .nav-link i {
+            width: 28px;
+            height: 28px;
+            background: #535665;
+            display: inline-block;
+            text-align: center;
+            line-height: 29px;
+            font-size: 15px;
+            border-radius: 50px;
+            margin: 0 7px 0 0px;
+            color: #fff;
+        }
+
+        .osahan-account-page-left .nav-link.active {
+            background: #f3f7f8;
+            color: #282c3f !important;
+        }
+
+        .osahan-account-page-left .nav-link.active i {
+            background: #282c3f !important;
+        }
+
+        .osahan-user-media img {
+            width: 90px;
+        }
+
+        .card offer-card h5.card-title {
+            border: 2px dotted #000;
+        }
+
+        .card.offer-card h5 {
+            border: 1px dotted #daceb7;
+            display: inline-table;
+            color: #17a2b8;
+            margin: 0 0 19px 0;
+            font-size: 15px;
+            padding: 6px 10px 6px 6px;
+            border-radius: 2px;
+            background: #fffae6;
+            position: relative;
+        }
+
+        .card.offer-card h5 img {
+            height: 22px;
+            object-fit: cover;
+            width: 22px;
+            margin: 0 8px 0 0;
+            border-radius: 2px;
+        }
+
+        .card.offer-card h5:after {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 4px solid #daceb7;
+            content: "";
+            left: 30px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .card.offer-card h5:before {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #daceb7;
+            content: "";
+            left: 30px;
+            position: absolute;
+            top: 0;
+        }
+
+        .payments-item .media {
+            align-items: center;
+        }
+
+        .payments-item .media img {
+            margin: 0 40px 0 11px !important;
+        }
+
+        .reviews-members .media .mr-3 {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+        }
+
+        .order-list img.mr-4 {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+            border-radius: 2px;
+        }
+
+        .osahan-cart-item p.text-gray.float-right {
+            margin: 3px 0 0 0;
+            font-size: 12px;
+        }
+
+        .osahan-cart-item .food-item {
+            vertical-align: bottom;
+        }
+
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+            color: #000000;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <div class="container-scroller">
@@ -114,16 +252,313 @@
         </nav>
         <!-- partial -->
         <div class="main-panel">
-            <div class="content-wrapper" style="display: flex; flex-direction: column; align-items: center;">
-                <h3>COMING SOON! 🚧 OUR <b style="color: #1a5fff">COGNITIVE DEVOPS TEAM</b> IS WORKING ON THIS PAGE.
-                    <br>
-                    <div style="text-align: center">STAY TUNED FOR UPDATES!</div>
-                </h3>
-                <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
-                    <img src="{% static 'images/heart12.png' %}" alt="under construction"
-                         style="max-width: 80%; max-height: 100%;">
+
+            {#            <div class="content-wrapper" style="display: flex; flex-direction: column; align-items: center;">#}
+            {#                <h3>COMING SOON! 🚧 OUR <b style="color: #1a5fff">COGNITIVE DEVOPS TEAM</b> IS WORKING ON THIS PAGE.#}
+            {#                    <br>#}
+            {#                    <div style="text-align: center">STAY TUNED FOR UPDATES!</div>#}
+            {#                </h3>#}
+            {#                <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">#}
+            {#                    <img src="{% static 'images/heart12.png' %}" alt="under construction"#}
+            {#                         style="max-width: 80%; max-height: 100%;">#}
+            {#                </div>#}
+            {#                <h3 style="font-weight: bold;">EMPOWERING HEALTHCARE WITH COGNITIVE DEVOPS</h3>#}
+            {#            </div>#}
+            <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
+                  integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv"
+                  crossorigin="anonymous">
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-9">
+                        <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane  fade  active show" id="orders" role="tabpanel"
+                                     aria-labelledby="orders-tab">
+                                    <h4 class="font-weight-bold mt-0 mb-4">Avaliable Consultant</h4>
+                                    <div class="bg-white card mb-4 order-list shadow-sm">
+                                        <div class="gold-members p-4">
+                                            <a href="#">
+                                            </a>
+                                            <div class="media">
+                                                <a href="#">
+                                                    <img class="mr-4"
+                                                         src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                                                         alt="Generic placeholder image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <a href="#">
+                                                        <span class="float-right text-info">Available for Consultation <i
+                                                                class="icofont-check-circled text-success"></i></span>
+                                                    </a>
+                                                    <h6 class="mb-2">
+                                                        <a href="#"></a>
+                                                        <a href="#" class="text-black">Dr. Emily Johnson</a>
+                                                    </h6>
+                                                    <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 987
+                                                        Central Avenue, City, State, Country
+                                                    </p>
+                                                    <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation
+                                                        #78563241 <i class="icofont-clock-time ml-2"></i> Thu, Dec 17,
+                                                        11:00 AM</p>
+                                                    <p class="text-dark">Dermatology Consultation, Skin Condition
+                                                        Diagnosis
+                                                    </p>
+                                                    <hr>
+                                                    <div class="float-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="#"><i
+                                                                class="icofont-headphone-alt"></i> CONTACT</a>
+                                                        <a class="btn btn-sm btn-primary" href="#"><i
+                                                                class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+                                                    </div>
+                                                    <p class="mb-0 text-black text-primary pt-2"><span
+                                                            class="text-black font-weight-bold"> Consultation Fee:</span>
+                                                        $180
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white card mb-4 order-list shadow-sm">
+                                        <div class="gold-members p-4">
+                                            <a href="#">
+                                            </a>
+                                            <div class="media">
+                                                <a href="#">
+                                                    <img class="mr-4"
+                                                         src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                         alt="Generic placeholder image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <a href="#">
+                                                        <span class="float-right text-info">Available for Consultation <i
+                                                                class="icofont-check-circled text-success"></i></span>
+                                                    </a>
+                                                    <h6 class="mb-2">
+                                                        <a href="#"></a>
+                                                        <a href="#" class="text-black">Dr. Jane Doe</a>
+                                                    </h6>
+                                                    <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 456
+                                                        Park Avenue, City, State, Country
+                                                    </p>
+                                                    <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation
+                                                        #98765432 <i class="icofont-clock-time ml-2"></i> Tue, Dec 15,
+                                                        10:00 AM</p>
+                                                    <p class="text-dark">Pediatric Consultation, Vaccination Advice
+                                                    </p>
+                                                    <hr>
+                                                    <div class="float-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="#"><i
+                                                                class="icofont-headphone-alt"></i> CONTACT</a>
+                                                        <a class="btn btn-sm btn-primary" href="#"><i
+                                                                class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+                                                    </div>
+                                                    <p class="mb-0 text-black text-primary pt-2"><span
+                                                            class="text-black font-weight-bold"> Consultation Fee:</span>
+                                                        $200
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white card mb-4 order-list shadow-sm">
+                                        <div class="gold-members p-4">
+                                            <a href="#">
+                                            </a>
+                                            <div class="media">
+                                                <a href="#">
+                                                    <img class="mr-4"
+                                                         src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                                                         alt="Generic placeholder image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <a href="#">
+                                                        <span class="float-right text-info">Available for Consultation <i
+                                                                class="icofont-check-circled text-success"></i></span>
+                                                    </a>
+                                                    <h6 class="mb-2">
+                                                        <a href="#"></a>
+                                                        <a href="#" class="text-black">Dr. Michael Johnson</a>
+                                                    </h6>
+                                                    <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 789
+                                                        Health Street, City, State, Country
+                                                    </p>
+                                                    <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation
+                                                        #54321098 <i class="icofont-clock-time ml-2"></i> Wed, Dec 16,
+                                                        2:30 PM</p>
+                                                    <p class="text-dark">Orthopedic Consultation, Sports Injury
+                                                        Evaluation
+                                                    </p>
+                                                    <hr>
+                                                    <div class="float-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="#"><i
+                                                                class="icofont-headphone-alt"></i> CONTACT</a>
+                                                        <a class="btn btn-sm btn-primary" href="#"><i
+                                                                class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+                                                    </div>
+                                                    <p class="mb-0 text-black text-primary pt-2"><span
+                                                            class="text-black font-weight-bold"> Consultation Fee:</span>
+                                                        $250
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white card mb-4 order-list shadow-sm">
+                                        <div class="gold-members p-4">
+                                            <a href="#">
+                                            </a>
+                                            <div class="media">
+                                                <a href="#">
+                                                    <img class="mr-4"
+                                                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                                         alt="Generic placeholder image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <a href="#">
+                                                        <span class="float-right text-info">Available for Consultation <i
+                                                                class="icofont-check-circled text-success"></i></span>
+                                                    </a>
+                                                    <h6 class="mb-2">
+                                                        <a href="#"></a>
+                                                        <a href="#" class="text-black">Dr. Robert Williams</a>
+                                                    </h6>
+                                                    <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 567
+                                                        Elm Street, City, State, Country
+                                                    </p>
+                                                    <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation
+                                                        #36547821 <i class="icofont-clock-time ml-2"></i> Fri, Dec 18,
+                                                        3:30 PM</p>
+                                                    <p class="text-dark">Neurology Consultation, Brain Health Assessment
+                                                    </p>
+                                                    <hr>
+                                                    <div class="float-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="#"><i
+                                                                class="icofont-headphone-alt"></i> CONTACT</a>
+                                                        <a class="btn btn-sm btn-primary" href="#"><i
+                                                                class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+                                                    </div>
+                                                    <p class="mb-0 text-black text-primary pt-2"><span
+                                                            class="text-black font-weight-bold"> Consultation Fee:</span>
+                                                        $300
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white card mb-4 order-list shadow-sm">
+                                        <div class="gold-members p-4">
+                                            <a href="#">
+                                            </a>
+                                            <div class="media">
+                                                <a href="#">
+                                                    <img class="mr-4"
+                                                         src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                                         alt="Generic placeholder image">
+                                                </a>
+                                                <div class="media-body">
+                                                    <a href="#">
+                                                        <span class="float-right text-info">Available for Consultation <i
+                                                                class="icofont-check-circled text-success"></i></span>
+                                                    </a>
+                                                    <h6 class="mb-2">
+                                                        <a href="#"></a>
+                                                        <a href="#" class="text-black">Dr. Elizabeth Wilson</a>
+                                                    </h6>
+                                                    <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 345
+                                                        Oak Avenue, City, State, Country
+                                                    </p>
+                                                    <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation
+                                                        #96321478 <i class="icofont-clock-time ml-2"></i> Sat, Dec 19,
+                                                        9:00 AM</p>
+                                                    <p class="text-dark">Gynecology Consultation, Women's Health Checkup
+                                                    </p>
+                                                    <hr>
+                                                    <div class="float-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="#"><i
+                                                                class="icofont-headphone-alt"></i> CONTACT</a>
+                                                        <a class="btn btn-sm btn-primary" href="#"><i
+                                                                class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+                                                    </div>
+                                                    <p class="mb-0 text-black text-primary pt-2"><span
+                                                            class="text-black font-weight-bold"> Consultation Fee:</span>
+                                                        $250
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white card mb-4 order-list shadow-sm">
+                                        <div class="gold-members p-4">
+    <a href="#">
+    </a>
+    <div class="media">
+        <a href="#">
+            <img class="mr-4" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <a href="#">
+                <span class="float-right text-info">Available for Consultation <i class="icofont-check-circled text-success"></i></span>
+            </a>
+            <h6 class="mb-2">
+                <a href="#"></a>
+                <a href="#" class="text-black">Dr. Christopher Lee</a>
+            </h6>
+            <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 234 Maple Lane, City, State, Country
+            </p>
+            <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation #78563412 <i class="icofont-clock-time ml-2"></i> Sun, Dec 20, 1:00 PM</p>
+            <p class="text-dark">Psychiatry Consultation, Mental Health Assessment
+            </p>
+            <hr>
+            <div class="float-right">
+                <a class="btn btn-sm btn-outline-primary" href="#"><i class="icofont-headphone-alt"></i> CONTACT</a>
+                <a class="btn btn-sm btn-primary" href="#"><i class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+            </div>
+            <p class="mb-0 text-black text-primary pt-2"><span class="text-black font-weight-bold"> Consultation Fee:</span> $280
+            </p>
+        </div>
+    </div>
+</div>
+                                    </div>
+                                    <div class="bg-white card  order-list shadow-sm">
+                                        <div class="gold-members p-4">
+    <a href="#">
+    </a>
+    <div class="media">
+        <a href="#">
+            <img class="mr-4" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <a href="#">
+                <span class="float-right text-info">Available for Consultation <i class="icofont-check-circled text-success"></i></span>
+            </a>
+            <h6 class="mb-2">
+                <a href="#"></a>
+                <a href="#" class="text-black">Dr. Sarah Brown</a>
+            </h6>
+            <p class="text-gray mb-1"><i class="icofont-location-arrow"></i> 876 Pine Street, City, State, Country
+            </p>
+            <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation #12569874 <i class="icofont-clock-time ml-2"></i> Mon, Dec 21, 4:00 PM</p>
+            <p class="text-dark">Ophthalmology Consultation, Eye Health Examination
+            </p>
+            <hr>
+            <div class="float-right">
+                <a class="btn btn-sm btn-outline-primary" href="#"><i class="icofont-headphone-alt"></i> CONTACT</a>
+                <a class="btn btn-sm btn-primary" href="#"><i class="icofont-refresh"></i> SCHEDULE AGAIN</a>
+            </div>
+            <p class="mb-0 text-black text-primary pt-2"><span class="text-black font-weight-bold"> Consultation Fee:</span> $220
+            </p>
+        </div>
+    </div>
+</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 style="font-weight: bold;">EMPOWERING HEALTHCARE WITH COGNITIVE DEVOPS</h3>
             </div>
         </div>
 

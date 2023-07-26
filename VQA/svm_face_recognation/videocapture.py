@@ -11,6 +11,8 @@ import pickle
 import time
 import cv2
 import csv
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 l = []
 def lis():
     return l
@@ -38,7 +40,7 @@ class Video:
     def stop_streaming(self):
          self.video.release()
 
-def datacreation(camera):
+def datacreation(camera , request):
     # preprocessingEmbeddings()
     # trainingFaceML()
     embeddingFile = "VQA/svm_face_recognation/output/embeddings.pickle"
@@ -94,6 +96,7 @@ def datacreation(camera):
                 j = np.argmax(preds)
                 proba = preds[j]
                 name = le.classes_[j]
+                username.append(name)
                 print(name)
                 l.append(name)
                 text = "{}  : {:.2f}%".format(name, proba * 100)
@@ -104,6 +107,7 @@ def datacreation(camera):
         ret, jpeg = cv2.imencode('.jpg', frame)
         frame1 = jpeg.tobytes()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame1 + b'\r\n')
+    print(max(l) + " is present")
 
 
 

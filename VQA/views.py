@@ -9,17 +9,44 @@ from VQA.svm_face_recognation.datasetCreation import VideoCamera, imageCapture
 from django.http import StreamingHttpResponse
 from VQA.svm_face_recognation.videocapture import Video , datacreation , lis , refresh
 
+user_name = ""
 def index(request):
     name = request.user.username.upper()
     return render(request, 'VQA/index.html', {'name': name})
 
 
 def userlogin(request):
+    if request.method == 'POST':
+        print("Inside register")
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print("inside register : - ",username, password)
+        curr_val = Registration(username=username, password=password)
+        curr_val.save()
+        user = User.objects.create_user(username=username, password=password)
+        user.save()
+        print(curr_val)
+        if 'my_checkbox' in request.POST:
+            # Checkbox is selected
+            print("vsdg")
+            user_name = username
+            return render(request, 'VQA/imagecreation.html', {'name': username.upper()})
+        return render(request, 'VQA/register.html')
+    return render(request, 'VQA/login.html')
+
+
+def logoutUser(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('userlogin')
+
+
+def register(request):
     if request.user.is_authenticated:
         name = request.user.username.upper()
         return render(request, 'VQA/index.html', {'name': name})
     elif request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('name')
         password = request.POST.get('password')
         curr_user = authenticate(username=username, password=password)
         print(username,password)
@@ -31,30 +58,10 @@ def userlogin(request):
                 return redirect('index')  # Redirect to the desired page after successful login
         else:
             print("Invalid credentials")
-            return render(request, 'VQA/login.html')
+            return render(request, 'VQA/register.html')
     else:
-        return render(request, 'VQA/login.html')
+        return render(request, 'VQA/register.html')
 
-
-def logoutUser(request):
-    if request.user.is_authenticated:
-        logout(request)
-    return redirect('userlogin')
-
-
-def register(request):
-    if request.method == 'POST':
-        print("Inside register")
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print("inside register : - ",username, password)
-        curr_val = Registration(username=username, password=password)
-        curr_val.save()
-        user = User.objects.create_user(username=username, password=password)
-        user.save()
-        print(curr_val)
-        return render(request, 'VQA/login.html')
-    return render(request, 'VQA/register.html')
 
 
 def vqa(request):
@@ -139,14 +146,14 @@ def video_feed(request):
 
 
 def video_feed1(request):
-    return StreamingHttpResponse(datacreation(Video()), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(datacreation(Video() , request), content_type='multipart/x-mixed-replace; boundary=frame')
 
 def stop_streaming1(request):
     if request.method == "POST":
         print("PRINTING")
         camera = Video()
         camera.stop_streaming()
-        return render(request, 'vqa/login.html', {"status": True, "username": request.user , "lis" : []})
+        return render(request, 'vqa/imagecreation.html', {"status": True, "username": request.user , "lis" : []})
     l = list(lis())
     print(l)
     refresh()
@@ -160,12 +167,19 @@ def stop_streaming(request):
         # camera = VideoCamera()
         # camera.stop_streaming()
         return render(request, 'vqa/register.html', {"status": True, "username": request.user})
-    return render(request, 'vqa/login.html', {"status": False, "username": request.user})
+    return render(request, 'vqa/register.html', {"status": False, "username": request.user})
 
 def uncapture(request):
-    if request.method == "POST":
-        return redirect('stop_streaming')
+    return render(request , 'vqa/register.html')
 
 def uncapture1(request):
+    val = lis()
+    print(val)
+    if max(val) == "Praveen S" or max(val) == "Praveen":
+        return render(request , 'vqa/index.html' , {"name" : max(val)})
+    else:
+        return render(request , 'vqa/register.html')
+
+def imagecreation(request):
     if request.method == "POST":
-        return redirect('stop_streaming1')
+        return redirect('imagecreation')

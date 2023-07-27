@@ -8,6 +8,8 @@ import json
 from VQA.svm_face_recognation.datasetCreation import VideoCamera, imageCapture
 from django.http import StreamingHttpResponse
 from VQA.svm_face_recognation.videocapture import Video , datacreation , lis , refresh
+import pandas as pd
+from fuzzywuzzy import fuzz
 
 user_name = ""
 def index(request):
@@ -63,6 +65,29 @@ def register(request):
         return render(request, 'VQA/register.html')
 
 
+def find_answer_explanation(input_classname):
+    # Read the Excel file into a pandas DataFrame
+    df = pd.read_excel('VQA/VQA_Image_Classifier/DATASET_VQA1.xls')
+
+    # Calculate the fuzzy match score for each row in the 'classname' column
+    df['fuzzy_score'] = df['class name'].apply(lambda x: fuzz.partial_ratio(input_classname, x))
+
+    # Sort the DataFrame by fuzzy match score in descending order
+    df = df.sort_values('fuzzy_score', ascending=False)
+
+    # Get the row with the highest fuzzy match score (closest match)
+    best_match = df.iloc[0]
+
+    # Set the threshold for a minimum acceptable fuzzy match score (adjust as needed)
+    min_acceptable_score = 70
+
+    # Check if the best match has a score above the threshold
+    if best_match['fuzzy_score'] >= min_acceptable_score:
+        answer = best_match['answer']
+        explanation = best_match['explanation']
+        return answer, explanation
+    else:
+        return None, None
 
 def vqa(request):
     if request.method == 'POST':
@@ -78,15 +103,25 @@ def vqa(request):
             # Call the function from the other file
             image_path = my_model.image.path
             print(image_path)
-            answer = classify_image(image_path, questions)
-            print(answer)
+            answer1 = classify_image(image_path, questions)
+            print(answer1)
+            input_classname = answer1
+            answer, explanation = find_answer_explanation(input_classname)
+            explanation = explanation.split(".")
+            print(answer , explanation)
+
+            if answer is not None and explanation is not None:
+                print(f"Answer: {answer}")
+                print(f"Explanation: {explanation}")
+            else:
+                print(f"No close match found for classname '{input_classname}'.")
             # print(questions)
             # print(answer)
             image_url = my_model.image.url if my_model.image else None
             if answer == "no":
                 answer = "Apologies! 🙇‍♂️ Our cognitive devops team is still sharpening the AI's knowledge, and unfortunately, it hasn't learned about this specific input yet. Feel free to explore other questions or images, and we'll strive to improve the AI's capabilities for next time!"
             # print(answer)  # Print the answer for testing
-            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer,'question': questions,'image_url': image_url})
+            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1,'question': questions,'image_url': image_url})
 
     return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper()})
 

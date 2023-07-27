@@ -3,172 +3,185 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>COGNITIVE DEVOPS</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
-  <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
-  <!-- endinject -->
-  <!-- plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>COGNITIVE DEVOPS</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
     <style>
-    .vertical {
-      border-left: 3px solid black;
-      height: 100%;
-      position:absolute;
-      left: 50%;
-    }
-  </style>
+        .vertical {
+            border-left: 3px solid black;
+            height: 110vh;
+            position: absolute;
+            left: 50%;
+        }
+    </style>
 </head>
 
 <body style="background-color: white">
-  <div class="container-scroller">
+<div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
-        <div class="row flex-grow">
-          <div class="col-lg-6 d-flex align-items-center justify-content-center">
-            <div class="auth-form-transparent text-left p-3">
-              <div class="brand-logo">
-                <img src="{% static 'images/cd_logo-removebg-preview (1).png' %}" alt="logo">
-              </div>
-              <h4>Login</h4>
-              <form class="pt-3" method="POST" action="{% url 'register' %}">
-                  {% csrf_token %}
-                <div class="form-group">
-                  <label>USERNAME</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
+        <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+            <div class="row flex-grow">
+                <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                    <div class="auth-form-transparent text-left p-3">
+                        <div class="brand-logo">
+                            <img src="{% static 'images/Cog2.png' %}" alt="logo">
+                        </div>
+                        <h4>LOGIN</h4>
+                        <form class="pt-3" method="POST" action="{% url 'register' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>USERNAME</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend bg-transparent">
                       <span class="input-group-text bg-transparent border-right-0">
                         <i class="mdi mdi-account-outline text-primary"></i>
                       </span>
-                    </div>
-                    <input type="text" class="form-control form-control-lg border-left-0" placeholder="Username" name="name" id = "name">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>PASSWORD</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
+                                    </div>
+                                    <input type="text" class="form-control form-control-lg border-left-0"
+                                           placeholder="Username" name="name" id="name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>PASSWORD</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend bg-transparent">
                       <span class="input-group-text bg-transparent border-right-0">
                         <i class="mdi mdi-lock-outline text-primary"></i>
                       </span>
-                    </div>
-                    <input type="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password" name="password" id = "password">
-                  </div>
-                </div>
-                <div class="mt-3">
-                  <button class="btn btn-block btn-lg font-weight-medium auth-form-btn" type="submit" style="background-color: #25a9e1 ; color: white">LOGIN using username and password</button>
-                </div>
-                <div class="text-center mt-4 font-weight-light">
-                  Don't have an account? <a href="{% url 'userlogin' %}" class="text-primary">Create a new account</a>
-                </div>
-              </form>
-            </div>
-          </div>
-        <div class = "vertical"></div>
-          <div class="col-lg-6  d-flex flex-row">
-              <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                <div class="col-sm-12 " >
-                            <div class="rounded h-100 p-4"  style="background: none  ; margin-top: 140px ; margin-left:50px ">
-<div class="brand-logo">
-                <img src="{% static 'images/cd_logo-removebg-preview (1).png' %}" alt="logo">
-              </div>
-                                <h4 class="card-title">Login</h4>
-
-                                <br>
-                            <div  id="result_dis">
-
-                                    {% if status == True %}
-                                        <div  id="video_div">
-                                     <img src="{% url 'video_feed1' %}" id = "video_result" >
-                                        </div>
-                                    {% endif %}
-                            <div style="margin: auto;">
-                                {% if status != True %}
-                                <form method="POST" action="{% url 'stop_streaming' %}">
-
-                                    {% csrf_token %}
-                                    <label>
-IF YOU WANT TO LOG IN USING FACE RECOGNITION AUTHENTICATION, PLEASE CLICK THE BUTTON BELOW.
-                                    </label>
-                                    <h5>Note:</h5>
-                                    <ul>
-    <li>Ensure a clear and well-lit face.</li>
-<li>Avoid sunglasses or face coverings.</li>
-<li>Look directly at the camera during authentication.</li>
-<li>Keep a neutral facial expression for best results.</li>
-<li>Position your face properly within the frame.</li>
-
-  </ul>
-                                    <button type="submit" class="btn btn-lg" style="margin-bottom: 180px ; background-color: #25a9e1 ; color: white ; width: 50% ; margin-left: 105px">LOGIN Using Face Recognition</button>
-
-                                </form>
-                                {% endif %}
-                                {% if status == True %}
-                                <form method="POST" action="{% url 'uncapture1' %}">
-                                    {% csrf_token %}
-                                    <button class="btn  btn-rounded btn-fw" id="submitButton" type="submit" style="display: none;background-color: #85CDFD ; color:black">Stop Recognition</button>
-                                </form>
-                                {% endif %}
+                                    </div>
+                                    <input type="password" class="form-control form-control-lg border-left-0"
+                                           id="exampleInputPassword" placeholder="Password" name="password"
+                                           id="password">
+                                </div>
                             </div>
+                            <div class="mt-3">
+                                <button class="btn btn-block btn-lg font-weight-medium auth-form-btn" type="submit"
+                                        style="background-color: #25a9e1 ; color: white">LOGIN using username and
+                                    password
+                                </button>
+                            </div>
+                            <div class="text-center mt-4 font-weight-light">
+                                Don't have an account? <a href="{% url 'userlogin' %}" class="text-primary">Create a new
+                                account</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="vertical"></div>
+{#                <div class="col-lg-6  d-flex flex-row">#}
+            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="row g-4">
+                            <div class="col-sm-12">
+                                <div class="rounded h-100 p-4"
+                                     style="background: none  ; margin-top: 140px ; margin-left:50px ">
+                                    <div class="brand-logo">
+                                        <img src="{% static 'images/Cog2.png' %}" alt="logo">
+                                    </div>
+                                    <h4 class="card-title">LOGIN</h4>
+
+                                    <br>
+                                    <div id="result_dis">
+
+                                        {% if status == True %}
+                                            <div id="video_div">
+                                                <img src="{% url 'video_feed1' %}" id="video_result">
+                                            </div>
+                                        {% endif %}
+                                        <div style="margin: auto;">
+                                            {% if status != True %}
+                                                <form method="POST" action="{% url 'stop_streaming' %}">
+
+                                                    {% csrf_token %}
+                                                    <label>
+                                                        IF YOU WANT TO LOG IN USING FACE RECOGNITION AUTHENTICATION,
+                                                        PLEASE CLICK THE BUTTON BELOW.
+                                                    </label>
+                                                    <h5>Note:</h5>
+                                                    <ul>
+                                                        <li>Ensure a clear and well-lit face.</li>
+                                                        <li>Avoid sunglasses or face coverings.</li>
+                                                        <li>Look directly at the camera during authentication.</li>
+                                                        <li>Keep a neutral facial expression for best results.</li>
+                                                        <li>Position your face properly within the frame.</li>
+
+                                                    </ul>
+                                                    <button type="submit" class="btn btn-lg"
+                                                            style="margin-bottom: 180px ; background-color: #25a9e1 ; color: white ; width: 50% ; margin-left: 105px">
+                                                        LOGIN Using Face Recognition
+                                                    </button>
+
+                                                </form>
+                                            {% endif %}
+                                            {% if status == True %}
+                                                <form method="POST" action="{% url 'uncapture1' %}">
+                                                    {% csrf_token %}
+                                                    <button class="btn  btn-rounded btn-fw" id="submitButton"
+                                                            type="submit"
+                                                            style="display: none;background-color: #85CDFD ; color:black">
+                                                        Stop Recognition
+                                                    </button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+
+                        <!-- Footer End -->
+                    </div>
+
                 </div>
             </div>
-
-
-
-
-
-
-            <!-- Footer End -->
         </div>
-
-          </div>
-        </div>
-      </div>
-      <!-- content-wrapper ends -->
+        <!-- content-wrapper ends -->
     </div>
     <!-- page-body-wrapper ends -->
-  </div>
+</div>
 <script>
-   const textInput = document.getElementById('textInput');
-const submitButton = document.getElementById('submitButton');
+    const textInput = document.getElementById('textInput');
+    const submitButton = document.getElementById('submitButton');
 
-// Function to perform the action when the button is clicked
-function handleClick() {
-  console.log('Button clicked! Do something...');
-  // Replace the console.log statement with your desired functionality
-}
+    // Function to perform the action when the button is clicked
+    function handleClick() {
+        console.log('Button clicked! Do something...');
+        // Replace the console.log statement with your desired functionality
+    }
 
-// Add click event listener to the button
-submitButton.addEventListener('click', handleClick);
+    // Add click event listener to the button
+    submitButton.addEventListener('click', handleClick);
 
-// Add keypress event listener to the document
-document.addEventListener('keypress', function (event) {
-  if (event.key === 'q') {
-    event.preventDefault(); // Prevent the default action (e.g., closing the browser)
-    submitButton.click(); // Trigger the click event of the button
-  }
-});
+    // Add keypress event listener to the document
+    document.addEventListener('keypress', function (event) {
+        if (event.key === 'q') {
+            event.preventDefault(); // Prevent the default action (e.g., closing the browser)
+            submitButton.click(); // Trigger the click event of the button
+        }
+    });
 
 
 </script>
-  <!-- plugins:js -->
-  <script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{% static 'js/off-canvas.js' %}"></script>
-  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
-  <script src="{% static 'js/template.js' %}"></script>
-  <!-- endinject -->
+<!-- plugins:js -->
+<script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js' %}"></script>
+<script src="{% static 'js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'js/template.js' %}"></script>
+<!-- endinject -->
 </body>
 
 </html>

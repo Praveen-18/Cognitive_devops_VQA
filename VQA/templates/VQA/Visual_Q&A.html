@@ -19,30 +19,54 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
     <style>
+    .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-.preloader {
-  text-align: center;
-}
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #25a9e1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
 
-.loading-symbol {
-  /* Add your loading symbol styling here */
-  width: 50px;
-  height: 50px;
-  background-color: #007bff;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
-  margin: 0 auto;
-}
+        .loading-text {
+            color: #25a9e1;
+            font-size: 18px;
+            margin-top: 10px;
+            text-align: center;
+        }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-.loading-text {
-  font-size: 20px;
-  margin-top: 10px;
-}
+
+    ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
 
     </style>
 </head>
@@ -67,7 +91,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                 <span class="input-group-text" id="search">
-                  <i class="mdi mdi-magnify">{{ name }}</i>
+                  <i class="mdi mdi-magnify"></i>
                 </span>
                         </div>
                         <input type="text" class="form-control" placeholder="Search now" aria-label="search"
@@ -142,6 +166,41 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="col-12 grid-margin stretch-card">
+                {% if answer %}
+                    <div class="card">
+                        <div class="card-body text-center">
+                            {#            <h4 class="card-title" style="font-size: 24px;">Answer</h4>#}
+                            <p class="card-description" style="font-size: 20px;">
+                                {% if answer %}
+                                    <strong style="color: black">Question:</strong><br> {{ question }}<br>
+                                    <br>
+                                    {#                    <strong>Image:</strong><br>#}
+                                    <img src="{{ image_url }}" alt="Image" style="width: 25%; height: 50%;"><br>
+                                    <br>
+                                    <strong style="color: black">ANSWER: </strong><br> {{ answer }}<br>
+                                    <br>
+                                    {% if explanation != "No explanation available." %}
+                                    <strong style="color: black">EXPLAINATION: </strong><br>
+
+                                    {% for i in explanation %}
+{#                                        <ul>#}
+                                    <li>{{ i }}</li>
+{#                                        </ul>#}
+                                    {% endfor %}
+                                        {% endif %}
+                                {% else %}
+                                    No answer available.
+                                {% endif %}
+                            </p>
+                        </div>
+                    <div style="display: flex; justify-content: center;">
+        <a href="{% url 'vqa' %}" class="btn font-weight-medium auth-form-btn"
+   style="background-color: #25a9e1; color: white; padding: 5px 10px; margin-bottom: 15px; width: 100px;">
+    BACK
+</a>
+    </div>
+                    </div>
+                    {% else %}
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="text-align: center;font-size: xxx-large">VISUAL QUESTION AND
@@ -149,7 +208,8 @@
                             <p class="card-description">
                                 <br>
                             </p>
-                            <form class="forms-sample" method="post" action="{% url 'vqa' %}" id="vqa" enctype="multipart/form-data">
+                            <form class="forms-sample" method="post" action="{% url 'vqa' %}" id="vqa"
+                                  enctype="multipart/form-data" onsubmit="openPreloader()">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="exampleInputName1">QUESTION</label>
@@ -173,48 +233,66 @@
                                     <img id="imagePreview" src="#" alt="Preview"
                                          style="display: none; width: 300px; height: 300px; margin: 0 auto;">
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2" onclick="openPreloader()">Submit</button>
+                                <button type="submit" class="btn btn-primary mr-2" onclick="openPreloader()">Submit
+                                </button>
                                 <button class="btn btn-light">Cancel</button>
                             </form>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            {#            <h4 class="card-title" style="font-size: 24px;">Answer</h4>#}
-                            <p class="card-description" style="font-size: 20px;">
-                                {% if answer %}
-                                    <strong>Question:</strong> {{ question }}<br>
-                                    <br>
-                                    {#                    <strong>Image:</strong><br>#}
-                                    <img src="{{ image_url }}" alt="Image" style="width: 25%; height: 50%;"><br>
-                                    <br>
-                                    <strong>Answer:</strong> {{ answer }}
-                                {% else %}
-                                    No answer available.
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
+                {% endif %}
+
                 </div>
 
             </div>
         </div>
         <!-- main-panel ends -->
     </div>
+<div id="preload" class="preloader" style="display: none;">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingText">Preprocessing...</div>
+        </div>
     <!-- page-body-wrapper ends -->
 </div>
-<div id = "preload" class="preloader" style="display: none" >
-<img src="{% static 'images/cd_logo-removebg-preview (1).png' %}" style="position: fixed ; left: 40% ; top : 28%"><br>
-    <div class="loading-text" id="loadingText" style="position: fixed ; left: 49% ; top : 78% ; color: #25a9e1">Preprocessing</div>
-</div>
-<!-- container-scroller -->
+
+
 <script>
+    const loadingText = document.getElementById('loadingText');
+    const texts = ["Preprocessing", "Feature Extraction", "Trained model", "Fitted vectorizer", "Retrieving the answer"];
+    const textDuration = 7000; // 6 seconds
+    const totalDuration = 45000; // 25 seconds
+
+    let index = 0;
+    let currentDuration = 0;
+
+    function changeText() {
+        loadingText.textContent = texts[index] + "...";
+        index = (index + 1) % texts.length;
+        currentDuration = 0;
+    }
+
+    function updateText() {
+        currentDuration += textDuration;
+        if (currentDuration >= totalDuration) {
+            clearInterval(textChangeInterval);
+            loadingText.textContent = "Loading Complete!";
+            setTimeout(() => {
+                document.getElementById("preload").style.display = "none";
+            }, 1000); // Add a slight delay before hiding the preloader
+        } else {
+            changeText();
+        }
+    }
+
+    // Start changing text every 6 seconds
+    const textChangeInterval = setInterval(updateText, textDuration);
+
+    // Function to show the preloader
     function openPreloader() {
-        document.getElementById("preload").style.display = "block";
+        document.getElementById("preload").style.display = "flex";
     }
 </script>
+
+
 <script>
     function triggerImageUpload() {
         document.getElementById('imageUpload').click();
@@ -225,30 +303,6 @@
         var info = document.getElementById('uploadImageInfo');
         info.value = input.files[0] ? input.files[0].name : '';
     }
-
-
-</script>
-<script>
-    const loadingText = document.getElementById('loadingText');
-const texts = ["Preprocessing", "Feature Extraction", "Trained model", "Fitted vectorizer", "Retrieving the answer"];
-
-let index = 0;
-const interval = 5000; // 5 seconds
-
-function changeText() {
-  loadingText.textContent = texts[index];
-  index = (index + 1) % texts.length;
-}
-
-// Change text every 5 seconds
-const textChangeInterval = setInterval(changeText, interval);
-
-// Stop the text change after 25 seconds
-setTimeout(() => {
-  clearInterval(textChangeInterval);
-  loadingText.textContent = "Loading Complete!";
-}, 25000);
-
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

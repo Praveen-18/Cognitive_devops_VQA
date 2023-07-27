@@ -40,7 +40,7 @@ def userlogin(request):
 def logoutUser(request):
     if request.user.is_authenticated:
         logout(request)
-    return redirect('userlogin')
+    return redirect('register')
 
 
 def register(request):
@@ -89,6 +89,17 @@ def find_answer_explanation(input_classname):
     else:
         return None, None
 
+
+
+def separate_text_by_dot(text):
+    # Split the text into individual sentences based on the dot (".") as a delimiter
+    sentences = text.split(". ")
+
+    # Remove any leading or trailing whitespaces from each sentence
+    sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
+
+    return sentences
+
 def vqa(request):
     if request.method == 'POST':
         questions = request.POST.get('questions')
@@ -107,23 +118,44 @@ def vqa(request):
             print(answer1)
             input_classname = answer1
             answer, explanation = find_answer_explanation(input_classname)
-            explanation = explanation.split(".")
-            print(answer , explanation)
+            print(answer, explanation)
+
+            explain_str = []  # Initialize with an empty list
 
             if answer is not None and explanation is not None:
                 print(f"Answer: {answer}")
-                print(f"Explanation: {explanation}")
+
+                if explanation.strip():
+                    sentences = separate_text_by_dot(explanation)
+                    explanation_str = '. '.join(sentences)
+
+                    if explanation_str.endswith('. '):
+                        explanation_str = explanation_str[:-2]
+
+                    explain_str = explanation_str.split(". ")
+
+                    for sentence in explain_str:
+                        print(sentence)
+
+                else:
+                    explanation_str = "No explanation available."
+                    print(explanation_str)
+
             else:
                 print(f"No close match found for classname '{input_classname}'.")
-            # print(questions)
-            # print(answer)
+                explanation_str = "No explanation available."
+                explain_str = "No explanation available."
+                print(explanation_str)
+
+
             image_url = my_model.image.url if my_model.image else None
             if answer == "no":
                 answer = "Apologies! 🙇‍♂️ Our cognitive devops team is still sharpening the AI's knowledge, and unfortunately, it hasn't learned about this specific input yet. Feel free to explore other questions or images, and we'll strive to improve the AI's capabilities for next time!"
-            # print(answer)  # Print the answer for testing
-            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1,'question': questions,'image_url': image_url})
+
+            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1, 'question': questions, 'image_url': image_url, 'explanation': explain_str, 'answer1': answer})
 
     return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper()})
+
 
 
 def bmi_calculator(request):

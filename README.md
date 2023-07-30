@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src = "https://github.com/Praveen-18/Cognitive_devops_VQA/blob/master/VQA/static/images/dashboard_image1.jpg"></img>
+<img src = "https://github.com/Praveen-18/Cognitive_devops_VQA/blob/master/VQA/static/images/cd_logo-removebg-preview%20(1).png"></img>
 # Virtual Q&A in Healthcare - Cognitive Devops
 
 

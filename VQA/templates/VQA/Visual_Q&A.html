@@ -257,39 +257,43 @@
 
 <script>
     const loadingText = document.getElementById('loadingText');
-    const texts = ["Preprocessing", "Feature Extraction", "Trained model", "Fitted vectorizer", "Retrieving the answer"];
-    const textDuration = 7000; // 6 seconds
-    const totalDuration = 45000; // 25 seconds
+const texts = ["Preprocessing", "Feature Extraction", "Trained model", "Fitted vectorizer", "Retrieving the answer"];
+const textDuration = 5000; // 7 seconds
+const totalDuration = 45000; // 45 seconds
 
-    let index = 0;
-    let currentDuration = 0;
+let index = 0;
+let currentDuration = 0;
 
-    function changeText() {
-        loadingText.textContent = texts[index] + "...";
-        index = (index + 1) % texts.length;
-        currentDuration = 0;
-    }
+function changeText() {
+    loadingText.textContent = texts[index] + "...";
+    index = (index + 1) % texts.length;
+    currentDuration = 0;
+}
 
-    function updateText() {
-        currentDuration += textDuration;
-        if (currentDuration >= totalDuration) {
-            clearInterval(textChangeInterval);
+function updateText() {
+    currentDuration += textDuration;
+    if (currentDuration >= totalDuration || index === texts.length - 1) {
+        clearInterval(textChangeInterval);
+        if (index !== texts.length - 1) {
             loadingText.textContent = "Loading Complete!";
             setTimeout(() => {
                 document.getElementById("preload").style.display = "none";
             }, 1000); // Add a slight delay before hiding the preloader
-        } else {
-            changeText();
         }
+    } else {
+        changeText();
     }
+}
 
-    // Start changing text every 6 seconds
-    const textChangeInterval = setInterval(updateText, textDuration);
+// Start changing text every 7 seconds
+const textChangeInterval = setInterval(updateText, textDuration);
 
-    // Function to show the preloader
-    function openPreloader() {
-        document.getElementById("preload").style.display = "flex";
-    }
+// Function to show the preloader
+function openPreloader() {
+    document.getElementById("preload").style.display = "flex";
+}
+
+
 </script>
 
 

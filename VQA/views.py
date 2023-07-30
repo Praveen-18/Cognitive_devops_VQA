@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Registration, Question
+from .models import Registration, Question, BloodDonation
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
 import json
@@ -206,6 +206,17 @@ def consultant(request):
     return render(request, 'VQA/consultant.html', {'name': request.user.username.upper()})
 
 def blooddonation(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        bloodgroup = request.POST.get('bloodgroup')
+        phonenumber = request.POST.get('phonenumber')
+        address = request.POST.get('address')
+        print(name, email, bloodgroup, phonenumber, address)
+        val = BloodDonation(name=name, email=email, blood_group=bloodgroup, mobile=phonenumber, address=address)
+        val.save()
+        print(val)
+        return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper()})
     return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper()})
 
 def video_feed(request):

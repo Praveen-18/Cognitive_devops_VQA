@@ -15,3 +15,12 @@ class Question(models.Model):
         if self.question:
             return self.question
         return "No question available"
+
+class BloodDonation(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    blood_group = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name

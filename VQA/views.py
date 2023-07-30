@@ -242,7 +242,8 @@ def uncapture(request):
 def uncapture1(request):
     val = lis()
     print(val)
-    if max(val) == "Praveen S" or max(val) == "Praveen":
+    name_to_check = max(val)
+    if User.objects.filter(username=name_to_check).exists():
         return render(request , 'vqa/index.html' , {"name" : max(val)})
     else:
         return render(request , 'vqa/register.html')

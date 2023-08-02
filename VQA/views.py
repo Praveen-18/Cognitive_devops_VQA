@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Registration, Question, BloodDonation
+from .models import Registration, Question, BloodDonation, Doctor_register
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
 import json
@@ -262,3 +262,26 @@ def uncapture1(request):
 def imagecreation(request):
     if request.method == "POST":
         return redirect('imagecreation')
+
+def doctor_register(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        pancard = request.POST.get('pancard')
+        aadharcard = request.POST.get('aadharcard')
+        specialist = request.POST.get('specialist')
+        experience = request.POST.get('experience')
+        hospital = request.POST.get('hospital')
+        address = request.POST.get('address')
+        password = request.POST.get('password')
+
+        val = Doctor_register(name=name,age=age,gender=gender,email=email,mobile=mobile,pancard=pancard,aadharcard=aadharcard,specialist=specialist,experience=experience,hospital=hospital,address=address,password=password)
+        val.save()
+        user = User.objects.create_user(username=name, password=password)
+        user.save()
+
+        return render(request , 'vqa/register.html' , {'name' : request.user.username.upper()})
+    return render(request , 'vqa/doctor_register.html' , {'name' : request.user.username.upper()})

@@ -24,3 +24,20 @@ class BloodDonation(models.Model):
     address = models.CharField(max_length=100)
     def __str__(self):
         return self.name
+
+class Doctor_register(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.ImageField()
+    gender = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    mobile = models.ImageField()
+    pancard = models.CharField(max_length=100)
+    aadharcard = models.ImageField()
+    specialist = models.CharField(max_length=100)
+    experience = models.ImageField()
+    hospital = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

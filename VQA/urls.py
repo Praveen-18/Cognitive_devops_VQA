@@ -21,4 +21,5 @@ urlpatterns = [
     path('uncapture1', views.uncapture1, name='uncapture1'),
     path('uncapture', views.uncapture, name='uncapture'),
     path('imagecreation/' , views.imagecreation , name='imagecreation'),
+    path('doctor_register/',views.doctor_register,name='doctor_register'),
 ]

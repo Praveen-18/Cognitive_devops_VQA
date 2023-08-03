@@ -41,3 +41,22 @@ class Doctor_register(models.Model):
 
     def __str__(self):
         return self.name
+
+class Consultant(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    address = models.CharField(max_length=100)
+    number = models.CharField(max_length=100)
+    specialist = models.CharField(max_length=100)
+    consultation_fee = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Appointment_status(models.Model):
+    name = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=100)
+    doctor_name = models.CharField(max_length=100)
+    date = models.CharField(max_length=10, null=True)
+    def __str__(self):
+        return self.doctor_name

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Registration, Question, BloodDonation, Doctor_register
+from .models import Registration, Question, BloodDonation, Doctor_register, Consultant, Appointment_status
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
 import json
@@ -10,6 +10,8 @@ from django.http import StreamingHttpResponse
 from VQA.svm_face_recognation.videocapture import Video , datacreation , lis , refresh
 import pandas as pd
 from fuzzywuzzy import fuzz
+from datetime import datetime
+from django.http import JsonResponse
 
 user_name = ""
 def index(request):
@@ -203,7 +205,23 @@ def blog(request):
     return render(request, 'VQA/blog.html', {'name': request.user.username.upper()})
 
 def consultant(request):
-    return render(request, 'VQA/consultant.html', {'name': request.user.username.upper()})
+    if Doctor_register.objects.filter(name=request.user.username).exists():
+        appointments = Appointment_status.objects.filter(doctor_name=request.user.username)
+        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'status': True, 'appointments': appointments})
+    else:
+        if request.method == 'POST':
+            doctor_name = request.POST.get('doctor_name')
+            name = request.POST.get('name1')
+            mobile_number = request.POST.get('mobile_number')
+            current_date_str = datetime.now().strftime('%d-%m-%Y')
+            print(doctor_name, name, mobile_number, current_date_str)
+            val = Appointment_status(name=name, mobile=mobile_number, doctor_name=doctor_name, date=current_date_str)
+            val.save()
+            return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(),'consultant': Consultant.objects.all()})
+        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'consultant': Consultant.objects.all()})
+
+
+
 
 def blooddonation(request):
     if request.method == 'POST':
@@ -285,3 +303,25 @@ def doctor_register(request):
 
         return render(request , 'vqa/register.html' , {'name' : request.user.username.upper()})
     return render(request , 'vqa/doctor_register.html' , {'name' : request.user.username.upper()})
+
+def doctor_consultant(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        image = request.FILES.get('image')
+        address = request.POST.get('address')
+        number = request.POST.get('number')
+        specialist = request.POST.get('specialist')
+        consultation_fee = request.POST.get('consultation_fee')
+        print(name , address , number , specialist , consultation_fee)
+        if image:
+            my_model = Consultant(name=name,address=address,number=number,specialist=specialist,consultation_fee=consultation_fee)
+            my_model.image = image
+            my_model.save()
+            print("saved")
+
+
+        return render(request , 'vqa/consultant.html' , {'name' : request.user.username.upper(),'status': True})
+    print("NOT SAVED")
+    return render(request , 'vqa/doctor_consultant.html' , {'name' : request.user.username.upper()})
+
+

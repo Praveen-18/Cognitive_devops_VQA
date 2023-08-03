@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cognitive Devops</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}" />
+</head>
+
+<body>
+  <div class="container-scroller" style="display: flex ; align-items: center">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+        <div class="row flex-grow">
+          <div class="col d-flex align-items-center justify-content-center">
+            <div class="auth-form-transparent text-left p-3">
+              <div class="brand-logo">
+                <img src="{% static 'images/Cog2.png' %}" alt="logo">
+              </div>
+              <h4>CONSULTANT DETAILS!</h4>
+              <form class="pt-3" method="post" action="{% url 'doctor_consultant' %}" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="form-group">
+                  <label for="exampleInputEmail">NAME</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control form-control-lg border-left-1" id="example" placeholder="Name" name="name">
+                  </div>
+                </div>
+                  <div class="form-group">
+    <label>IMAGE UPLOAD</label>
+    <input type="file" name="image" class="file-upload-default" id="imageUpload" onchange="updateUploadedImageInfo()">
+    <div class="input-group col-xs-12">
+        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" id="uploadImageInfo">
+        <span class="input-group-append">
+            <button class="file-upload-browse btn btn-primary" type="button" onclick="triggerImageUpload()">UPLOAD</button>
+        </span>
+    </div>
+</div>
+
+                <div class="form-group">
+                  <label for="exampleInputPassword">ADDRESS</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control form-control-lg border-left-1" id="exampleId" placeholder="Address" name="address">
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="exampleInputPassword">NUMBER</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control form-control-lg border-left-1" id="exampleIn" placeholder="Number" name="number">
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="exampleInputPassword">SPECIALIST</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control form-control-lg border-left-1" id="exampleInsd" placeholder="Specialist" name="specialist">
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="exampleInputPassword">CONSULTATION FEE</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control form-control-lg border-left-1" id="exxd" placeholder="Consultation Fee" name="consultation_fee">
+                  </div>
+                </div>
+                <div class="my-3">
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SUBMIT</button>
+                </div>
+
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>
+  <script>
+    function triggerImageUpload() {
+        document.getElementById('imageUpload').click();
+    }
+
+    function updateUploadedImageInfo() {
+        var input = document.getElementById('imageUpload');
+        var info = document.getElementById('uploadImageInfo');
+        info.value = input.files[0] ? input.files[0].name : '';
+    }
+</script>
+  <script>
+    $(document).ready(function () {
+        $('#uploadImageButton').click(function () {
+            $('#imageUpload').click();
+        });
+
+        $('#imageUpload').change(function () {
+            var input = this;
+            var info = $('#uploadImageInfo');
+            info.val(input.files[0] ? input.files[0].name : '');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+</script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <!-- endinject -->
+</body>
+
+</html>

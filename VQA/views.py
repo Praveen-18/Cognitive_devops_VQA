@@ -207,18 +207,24 @@ def blog(request):
 def consultant(request):
     if Doctor_register.objects.filter(name=request.user.username).exists():
         appointments = Appointment_status.objects.filter(doctor_name=request.user.username)
-        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'status': True, 'appointments': appointments})
+        fees = 0
+        for appointment in appointments:
+            fees += int(appointment.fee)
+
+        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'status': True, 'appointments': appointments,'fees':fees})
     else:
         if request.method == 'POST':
             doctor_name = request.POST.get('doctor_name')
             name = request.POST.get('name1')
             mobile_number = request.POST.get('mobile_number')
             current_date_str = datetime.now().strftime('%d-%m-%Y')
-            print(doctor_name, name, mobile_number, current_date_str)
-            val = Appointment_status(name=name, mobile=mobile_number, doctor_name=doctor_name, date=current_date_str)
+            fee = request.POST.get('doctor_fee')
+
+            print(doctor_name, name, mobile_number, current_date_str, fee)
+            val = Appointment_status(name=name, mobile=mobile_number, doctor_name=doctor_name, date=current_date_str, fee=fee)
             val.save()
-            return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(),'consultant': Consultant.objects.all()})
-        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'consultant': Consultant.objects.all()})
+            return redirect('consultant')
+    return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'consultant': Consultant.objects.all()})
 
 
 

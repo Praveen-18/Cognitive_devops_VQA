@@ -19,6 +19,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
 
 
@@ -73,7 +74,7 @@
         .card.offer-card h5 {
             border: 1px dotted #daceb7;
             display: inline-table;
-            color: #17a2b8#17a2b8;
+            color: #17a2b8 #17a2b8;
             margin: 0 0 19px 0;
             font-size: 15px;
             padding: 6px 10px 6px 6px;
@@ -156,79 +157,64 @@
         a:hover {
             text-decoration: none;
         }
+
         .fixed-plus-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
-  }
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
         .custom-box-btn {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px; /* Adjust the width and height as needed */
-    height: 50px; /* Adjust the width and height as needed */
-    border: 2px solid #007bff; /* Adjust the border color as needed */
-    border-radius: 4px; /* Adjust the border radius as needed */
-    background-color: #007bff; /* Adjust the background color as needed */
-    color: #fff; /* Adjust the text color as needed */
-  }
-
-
-
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px; /* Adjust the width and height as needed */
+            height: 50px; /* Adjust the width and height as needed */
+            border: 2px solid #007bff; /* Adjust the border color as needed */
+            border-radius: 4px; /* Adjust the border radius as needed */
+            background-color: #007bff; /* Adjust the background color as needed */
+            color: #fff; /* Adjust the text color as needed */
+        }
 
 
         .overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-}
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
 
-.overlay-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-}
+        .overlay-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+        }
 
-{#.close-overlay-btn {#}
-{#    position: absolute;#}
-{#    top: 10px;#}
-{#    right: 10px;#}
-{#}#}
-{#.close-overlay-btn {#}
-{#    position: absolute;#}
-{#    top: 10px;#}
-{#    right: 10px;#}
-{#    background: none;#}
-{#    border: none;#}
-{#    cursor: pointer;#}
-{#}#}
-
-{#.close-overlay-btn i {#}
-{#    font-size: 20px; /* Adjust the font size of the close icon as needed */#}
-{#    color: #333; /* Change the color of the close icon as needed */#}
-{#}#}
-
-.close-overlay-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    color: #007bff ;
-}
+        .close-overlay-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+         .close-overlay-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #007bff;
+        }
 
     </style>
 </head>
@@ -248,6 +234,7 @@
             </div>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
             <ul class="navbar-nav mr-lg-4 w-100">
                 <li class="nav-item nav-search d-none d-lg-block w-100">
                     <div class="input-group">
@@ -261,6 +248,16 @@
                     </div>
                 </li>
             </ul>
+            {% if status %}
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+                    <a class="nav-link" href="#" style="cursor: pointer">
+                        <i class="fas fa-wallet"> <span> {{ fees }}</span></i>
+                    </a>
+
+                </div>
+            {% endif %}
+
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
@@ -331,41 +328,44 @@
 
             {% if status %}
                 <br>
-{#                <div class="container">#}
                 <div class="row">
                     <div class="col-md-12">
-                <div class="col-12 grid-margin">
-                <div class="col-lg-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="font-size: x-large;text-align: center;color: blue"> APPOINTMENT DETAILS  </h4>
-                            <br>
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-  <thead>
+                        <div class="col-12 grid-margin">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title"
+                                            style="font-size: x-large;text-align: center;color: blue"> APPOINTMENT
+                                            DETAILS </h4>
+                                        <br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
 
-    <tr style="text-align: center">
-      <th scope="col" >PATIENT NAME</th>
-      <th scope="col">DATE OF REGISTRATION</th>
-        <th scope="col">MOBILE NUMBER</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for i in appointments %}
-    <tr style="text-align: center">
-      <th scope="row">{{i.name}}</th>
-      <td>{{ i.date }}</td>
-    <td>{{ i.mobile }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+                                                <tr style="text-align: center">
+                                                    <th scope="col">PATIENT NAME</th>
+                                                    <th scope="col">DATE OF REGISTRATION</th>
+                                                    <th scope="col">MOBILE NUMBER</th>
+                                                    <th scope="col">FEE</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for i in appointments %}
+                                                    <tr style="text-align: center">
+                                                        <th scope="row">{{ i.name }}</th>
+                                                        <td>{{ i.date }}</td>
+                                                        <td>{{ i.mobile }}</td>
+                                                        <td>{{ i.fee }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
-                </div>
                 </div>
 
             {% endif %}
@@ -374,157 +374,161 @@
 
 
             {% if not status %}
-            <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
-                  integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv"
-                  crossorigin="anonymous">
+                <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
+                      integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv"
+                      crossorigin="anonymous">
 
-            <div class="container">
-                <div class="row">
+                <div class="container">
+                    <div class="row">
 
-                    <div class="col-md-9">
+                        <div class="col-md-9">
 
-                        <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
-                        <h4 class="font-weight-bold mt-0 mb-4">AVALIABLE CONSULTANT</h4>
-                            <div class="tab-content" id="myTabContent">
+                            <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                                <h4 class="font-weight-bold mt-0 mb-4">AVALIABLE CONSULTANT</h4>
+                                <div class="tab-content" id="myTabContent">
 
-                                {% for i in consultant %}
-                                <div class="tab-pane  fade  active show" id="orders" role="tabpanel"
-                                     aria-labelledby="orders-tab">
-                                    <div class="bg-white card mb-4 order-list shadow-sm">
-                                        <div class="gold-members p-4">
-                                            <a href="#">
-                                            </a>
-                                            <div class="media">
-                                                <a href="#">
-                                                    <img class="mr-4"
-                                                         src="{{ i.image.url }}"
-                                                         alt="Generic placeholder image">
-                                                </a>
-                                                <div class="media-body">
+                                    {% for i in consultant %}
+                                        <div class="tab-pane  fade  active show" id="orders" role="tabpanel"
+                                             aria-labelledby="orders-tab">
+                                            <div class="bg-white card mb-4 order-list shadow-sm">
+                                                <div class="gold-members p-4">
                                                     <a href="#">
+                                                    </a>
+                                                    <div class="media">
+                                                        <a href="#">
+                                                            <img class="mr-4"
+                                                                 src="{{ i.image.url }}"
+                                                                 alt="Generic placeholder image">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <a href="#">
 
                                                         <span class="float-right text-info">Available for Consultation <i
                                                                 class="icofont-check-circled text-success"></i></span>
-                                                    </a>
+                                                            </a>
 
-                                                    <h6 class="mb-2">
-                                                        <a href="#"></a>
-                                                        <a href="#" class="text-black">{{ i.name }}</a>
-                                                    </h6>
-                                                    <p class="text-gray mb-1"><i class="icofont-location-arrow"></i>{{ i.address }}
-                                                    </p>
-                                                    <p class="text-gray mb-3"><i class="icofont-list"></i> Consultation
-                                                        {{ i.id }} <i class="icofont-clock-time ml-2"></i></p>
-                                                    <p class="text-dark">{{ i.specialist }}
-                                                    </p>
-                                                    <hr>
-                                                    <div class="float-right">
-        <a class="btn btn-lg btn-primary book-appointment-btn" href="#" data-doctor-name="{{ i.name }}">
-            <i class="icofont-refresh"></i>BOOK APPOINTMENT
-        </a>
-    </div>
-                                                    <p class="mb-0 text-black text-primary pt-2"><span
-                                                            class="text-black font-weight-bold"> Consultation Fee: Rs</span>
-                                                        {{ i.consultation_fee|add:100 }}
-                                                    </p>
+                                                            <h6 class="mb-2">
+                                                                <a href="#"></a>
+                                                                <a href="#" class="text-black">{{ i.name }}</a>
+                                                            </h6>
+                                                            <p class="text-gray mb-1"><i
+                                                                    class="icofont-location-arrow"></i>{{ i.address }}
+                                                            </p>
+                                                            <p class="text-gray mb-3"><i class="icofont-list"></i>
+                                                                Consultation
+                                                                {{ i.id }} <i class="icofont-clock-time ml-2"></i></p>
+                                                            <p class="text-dark">{{ i.specialist }}
+                                                            </p>
+                                                            <hr>
+                                                            <div class="float-right">
+                                                                <a class="btn btn-lg btn-primary book-appointment-btn"
+                                                                   href="#" data-doctor-name="{{ i.name }}"
+                                                                   data-doctor-fee="{{ i.consultation_fee }}">
+                                                                    <i class="icofont-refresh"></i>BOOK APPOINTMENT
+                                                                </a>
+                                                            </div>
+                                                            <p class="mb-0 text-black text-primary pt-2"><span
+                                                                    class="text-black font-weight-bold"> Consultation Fee: Rs</span>
+                                                                {{ i.consultation_fee|add:100 }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
-                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- main-panel ends -->
-        {% endif %}
+                </div>
+            {% endif %}
     </div>
 
 
-
-{#    If the Doctor is logined    #}
+    {#    If the Doctor is logined    #}
 
     {% if status %}
-    <div class="fixed-plus-icon">
-        <a href="{% url 'doctor_consultant' %}" class="btn btn-primary btn-lg custom-box-btn">
-            <i class="mdi mdi-plus"></i>
-        </a>
-    </div>
+        <div class="fixed-plus-icon">
+            <a href="{% url 'doctor_consultant' %}" class="btn btn-primary btn-lg custom-box-btn">
+                <i class="mdi mdi-plus"></i>
+            </a>
+        </div>
 
     {% endif %}
 
-
-{#  End  #}
-
-
-    <!-- page-body-wrapper ends -->
-</div>
+    </div>
 
 <div id="appointmentOverlay" class="overlay">
     <div class="overlay-content">
         <form action="{% url 'consultant' %}" method="post" id="appointmentForm">
-        {% csrf_token %}
-    <input type="hidden" id="doctorName" name="doctor_name" value="">
-    <div class="form-group">
-{#        <label for="exampleInputName">DR NAME</label>#}
-        <div class="input-group">
-            <input type="hidden" class="form-control form-control-lg border-left-1" id="exampleInputName" placeholder="DR NAME" name="name">
-        </div>
-    </div>
+            {% csrf_token %}
+            <input type="hidden" id="doctorName" name="doctor_name" value="">
+            <input type="hidden" id="doctorFee" name="doctor_fee" value="">
             <div class="form-group">
-        <label for="exampleInputMobileNumber">NAME</label>
-        <div class="input-group">
-            <input type="tel" class="form-control form-control-lg border-left-1" placeholder="NAME" name="name1">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputMobileNumber">MOBILE NUMBER</label>
-        <div class="input-group">
-            <input type="tel" class="form-control form-control-lg border-left-1" id="exampleInputMobileNumber" placeholder="Mobile Number" name="mobile_number">
-        </div>
-    </div>
-    <div class="my-3">
-        <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SUBMIT</button>
-    </div>
-</form>
+                <div class="input-group">
+                    <input type="hidden" class="form-control form-control-lg border-left-1" id="exampleInputName"
+                           placeholder="DR NAME" name="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden" class="form-control form-control-lg border-left-1" id="exampleInputFee"
+                           placeholder="DR NAME" name="fee">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputMobileNumber">NAME</label>
+                <div class="input-group">
+                    <input type="tel" class="form-control form-control-lg border-left-1" placeholder="NAME"
+                           name="name1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputMobileNumber">MOBILE NUMBER</label>
+                <div class="input-group">
+                    <input type="tel" class="form-control form-control-lg border-left-1" id="exampleInputMobileNumber"
+                           placeholder="Mobile Number" name="mobile_number">
+                </div>
+            </div>
+            <div class="my-3">
+                <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SUBMIT
+                </button>
+            </div>
+        </form>
 
 
         <button id="closeOverlayBtn" class="close-overlay-btn">
-    <i class="fas fa-times"></i>
-</button>
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
 </div>
-
 
 
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const bookAppointmentBtn = document.querySelector('#bookAppointmentBtn');
         const appointmentOverlay = document.querySelector('#appointmentOverlay');
         const closeOverlayBtn = document.querySelector('#closeOverlayBtn');
 
-        bookAppointmentBtn.addEventListener('click', function(event) {
+        bookAppointmentBtn.addEventListener('click', function (event) {
             event.preventDefault(); // Prevent the default behavior of the anchor link
             appointmentOverlay.style.display = 'block';
         });
 
-        closeOverlayBtn.addEventListener('click', function() {
+        closeOverlayBtn.addEventListener('click', function () {
             appointmentOverlay.style.display = 'none';
         });
     });
 </script>
 
 
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const bookAppointmentBtns = document.querySelectorAll('.book-appointment-btn');
         const appointmentOverlay = document.querySelector('#appointmentOverlay');
         const closeOverlayBtn = document.querySelector('#closeOverlayBtn');
@@ -533,16 +537,26 @@
         const outputName = document.querySelector('#outputName');
         const outputMobileNumber = document.querySelector('#outputMobileNumber');
         const doctorNameInput = document.querySelector('#doctorName'); // Hidden input field for doctor's name
+        const doctorFeeInput = document.querySelector('#doctorFee'); // Hidden input field for doctor's fee
+        console.log(doctorFeeInput);
 
-        bookAppointmentBtns.forEach(function(bookAppointmentBtn) {
-            bookAppointmentBtn.addEventListener('click', function(event) {
+        bookAppointmentBtns.forEach(function (bookAppointmentBtn) {
+            bookAppointmentBtn.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent the default behavior of the anchor link
                 // Get the doctor's name from the data attribute
                 const doctorName = bookAppointmentBtn.getAttribute('data-doctor-name');
+                const doctorFee = bookAppointmentBtn.getAttribute('data-doctor-fee');
+                console.log(doctorFee);
+                console.log(doctorName);
                 // Set the doctor's name in the hidden input field
                 doctorNameInput.value = doctorName;
+                doctorFeeInput.value = doctorFee;
                 // Set the "Name" field based on the user's input (if any)
                 const nameInput = document.querySelector('#exampleInputName');
+                const feeInput = document.querySelector('#exampleInputFee');
+                if (feeInput.value.trim() === '') {
+                    feeInput.value = doctorFee;
+                }
                 if (nameInput.value.trim() === '') {
                     nameInput.value = doctorName;
                 }
@@ -551,7 +565,7 @@
             });
         });
 
-        closeOverlayBtn.addEventListener('click', function() {
+        closeOverlayBtn.addEventListener('click', function () {
             // Hide the appointment overlay when the close button is clicked
             appointmentOverlay.style.display = 'none';
             // Clear the output container
@@ -561,10 +575,6 @@
         });
     });
 </script>
-
-
-
-
 
 
 <!-- container-scroller -->

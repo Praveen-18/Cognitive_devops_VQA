@@ -58,5 +58,6 @@ class Appointment_status(models.Model):
     mobile = models.CharField(max_length=100)
     doctor_name = models.CharField(max_length=100)
     date = models.CharField(max_length=10, null=True)
+    fee = models.CharField(max_length=100, null=True)
     def __str__(self):
         return self.doctor_name

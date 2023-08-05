@@ -160,6 +160,11 @@
                         <span class="menu-title">HEMO CONNECT</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <div class="text-center">
+    <div id="google_translate_element"></div>
+</div>
+                </li>
             </ul>
         </nav>
         <!-- partial -->
@@ -212,9 +217,14 @@
                                   enctype="multipart/form-data" onsubmit="openPreloader()">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="exampleInputName1">QUESTION</label>
+                                    <label for="exampleInputName">QUESTION</label>
                                     <input type="text" class="form-control" id="exampleInputName1" placeholder="Name"
                                            name="questions">
+                                    <div style="width: 35px;height: 30px;padding: 10px;margin-right: 5px;border-radius: 10px" id="mike_div" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16" style="position: relative;left:4px;top: 3px;">
+  <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+  <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"/>
+</svg></div>
                                 </div>
                                 <div class="form-group">
                                     <label>File upload</label>
@@ -308,6 +318,57 @@ function openPreloader() {
         info.value = input.files[0] ? input.files[0].name : '';
     }
 </script>
+<script>
+    var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+
+var isListening = false;  // Flag to track if listening
+
+// Function to start/stop recognition
+function toggleListen() {
+    if (isListening) {
+        recognition.stop();
+        isListening = false;
+        console.log("yes")
+    } else {
+        console.log("start");
+        document.getElementById("mike_div").style.backgroundColor="red";
+        recognition.start();
+        {#setTimeout(function() { recognition.stop(); }, 10000);#}
+        isListening = true;
+    }
+}
+if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window || 'mozSpeechRecognition' in window || 'msSpeechRecognition' in window) {
+  console.log('Web Speech API is supported in this browser.');
+} else {
+  console.log('Web Speech API is NOT supported in this browser.');
+}
+
+recognition.onresult = function(event) {
+    console.log("hello")
+    var speechToText = event.results[0][0].transcript;
+    document.getElementById("mike_div").style.backgroundColor="";
+    document.getElementById("exampleInputName1").value=speechToText;
+    recognition.stop();
+
+}
+recognition.onspeechend = function() {
+    recognition.stop();
+    isListening = false;
+}
+
+
+
+recognition.onerror = function(event) {
+    console.log('Error occurred in recognition: ' + event.error);
+}
+
+// Add event listener to div
+document.getElementById('mike_div').addEventListener('click', toggleListen);
+
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -349,6 +410,18 @@ function openPreloader() {
 <script src="{% static 'js/data-table.js' %}"></script>
 <script src="{% static 'js/jquery.dataTables.js' %}"></script>
 <script src="{% static 'js/dataTables.bootstrap4.js' %}"></script>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+</script>
+
+<script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <!-- End custom js for this page-->
 </body>
 

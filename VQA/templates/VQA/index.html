@@ -1,6 +1,9 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
+
 
 <head>
     <!-- Required meta tags -->
@@ -19,6 +22,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
         /* Global Styles */
         body {
@@ -460,6 +464,11 @@ h5 {
                         <span class="menu-title">HEMO CONNECT</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <div class="text-center">
+    <div id="google_translate_element"></div>
+</div>
+                </li>
             </ul>
         </nav>
         <!-- partial -->
@@ -516,7 +525,7 @@ h5 {
                             <a href="#" class="zmdi zmdi-instagram"></a>
                         </span>
                         <span class="img-holder d-inline-block">
-                            <img src="{% static 'images/admins/sridhar.jpeg'%}" alt="Team">
+                            <img src="{% static 'images/admins/sridhar1.jpg'%}" alt="Team">
                         </span>
                     </div>
                     <div class="team-content">
@@ -577,6 +586,23 @@ h5 {
 <script src="{% static 'js/jquery.dataTables.js' %}"></script>
 <script src="{% static 'js/dataTables.bootstrap4.js' %}"></script>
 <!-- End custom js for this page-->
+
+
+
+
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+</script>
+
+<script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 
 </html>

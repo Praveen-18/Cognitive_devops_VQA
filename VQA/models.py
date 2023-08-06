@@ -61,3 +61,13 @@ class Appointment_status(models.Model):
     fee = models.CharField(max_length=100, null=True)
     def __str__(self):
         return self.doctor_name
+
+class Blog(models.Model):
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    post_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    name = models.CharField(max_length=100)
+    time = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

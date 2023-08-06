@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Registration, Question, BloodDonation, Doctor_register, Consultant, Appointment_status
+from .models import Registration, Question, BloodDonation, Doctor_register, Consultant, Appointment_status, Blog
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
 import json
@@ -202,7 +202,30 @@ def get_bmi_category(bmi):
         return 'OBESE'
 
 def blog(request):
-    return render(request, 'VQA/blog.html', {'name': request.user.username.upper()})
+    if request.method == 'POST':
+        print("Inside blog")
+        name = request.user.username.upper()
+        if Doctor_register.objects.filter(name=request.user.username).exists():
+            image = Consultant.objects.get(name=request.user.username).image
+        else:
+            image = "images/user.png"
+        post_image = request.FILES.get('post_image')
+        description = request.POST.get('description')
+        time = datetime.now().strftime('%d-%m-%y')
+
+        print(image, post_image, name, description, time)
+
+        blog_post = Blog(name=name, image=image, post_image=post_image, description=description, time=time)
+        blog_post.save()
+
+        # val = Blog(name=name, image=image, post_image=post_image, description=description, time=time)
+        # val.save()
+
+        return render(request, 'VQA/blog.html', {'name': request.user.username.upper()},
+                      {'blog': Blog.objects.all().order_by('-id')})
+
+    return render(request, 'VQA/blog.html',
+                  {'name': request.user.username.upper(), 'blog': Blog.objects.all().order_by('-id')})
 
 def consultant(request):
     if Doctor_register.objects.filter(name=request.user.username).exists():

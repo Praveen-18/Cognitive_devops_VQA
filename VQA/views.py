@@ -208,8 +208,9 @@ def blog(request):
         if Doctor_register.objects.filter(name=request.user.username).exists():
             image = Consultant.objects.get(name=request.user.username).image
         else:
-            image = "images/user.png"
+            image = "VQA/static/images/user.png"
         post_image = request.FILES.get('post_image')
+        print(post_image)
         description = request.POST.get('description')
         time = datetime.now().strftime('%d-%m-%y')
 
@@ -221,8 +222,10 @@ def blog(request):
         # val = Blog(name=name, image=image, post_image=post_image, description=description, time=time)
         # val.save()
 
-        return render(request, 'VQA/blog.html', {'name': request.user.username.upper()},
-                      {'blog': Blog.objects.all().order_by('-id')})
+        # return render(request, 'VQA/blog.html', {'name': request.user.username.upper()},
+        #               {'blog': Blog.objects.all().order_by('-id')})
+
+        return JsonResponse({'message':'yes'})
 
     return render(request, 'VQA/blog.html',
                   {'name': request.user.username.upper(), 'blog': Blog.objects.all().order_by('-id')})

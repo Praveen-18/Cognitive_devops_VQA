@@ -68,6 +68,8 @@ class Blog(models.Model):
     name = models.CharField(max_length=100)
     time = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
+    like = models.IntegerField(default=0)
+    dislike = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

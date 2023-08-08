@@ -45,7 +45,7 @@ def answer_question(image_name, question):
         loaded_model = pickle.load(f)
 
     # Load the fitted vectorizer from the training phase
-    print("Loading the fitted vectorizer...")
+    print("Loading the fitte+d vectorizer...")
     with open('VQA/VQA_Image_Classifier/vectorize1.pkl', 'rb') as f:
         vectorizer = pickle.load(f)
 
@@ -74,6 +74,7 @@ def classify_image(image_path , question):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = image_transforms(image).unsqueeze(0)
     image = image.to(device)
+
 
     with torch.no_grad():
         features = feature_extractor(image)

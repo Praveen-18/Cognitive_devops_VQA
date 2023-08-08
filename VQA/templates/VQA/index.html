@@ -458,6 +458,14 @@ h5 {
                         <span class="menu-title">CONSULTANT</span>
                     </a>
                 </li>
+                {% if not status %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'appointment_status' %}">
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
+                        <span class="menu-title">APPOINTMENT STATUS</span>
+                    </a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'blooddonation' %}">
                         <i class="mdi mdi-water menu-icon"></i>

@@ -338,8 +338,6 @@
         <!-- partial -->
         <div class="main-panel">
 
-
-            {% if status %}
                 <br>
                 <div class="row">
                     <div class="col-md-12">
@@ -349,39 +347,39 @@
                                     <div class="card-body">
                                         <h4 class="card-title"
                                             style="font-size: x-large;text-align: center;color: blue"> APPOINTMENT
-                                            DETAILS </h4>
+                                            STATUS </h4>
                                         <br>
                                         <div class="table-responsive">
                                             <table class="table table-striped">
                                                 <thead>
 
                                                 <tr style="text-align: center">
-                                                    <th scope="col">PATIENT NAME</th>
+                                                    <th scope="col">DOCTOR NAME</th>
                                                     <th scope="col">DATE OF REGISTRATION</th>
                                                     <th scope="col">MOBILE NUMBER</th>
                                                     <th scope="col">FEE</th>
-                                                    <th scope="col">PAYMENT STATUS</th>
+                                                    <th scope="col">STATUS</th>
+                                                    <th scope="col">FEEDBACK</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for i in appointments %}
+                                                {% for i in det %}
                                                     <tr style="text-align: center">
-                                                        <th scope="row">{{ i.name }}</th>
-                                                        <td>{{ i.date }}</td>
-                                                        <td>{{ i.mobile }}</td>
-                                                        <td>{{ i.fee }}</td>
-                                                        <td>
+        <th scope="row">{{ i.doctor_name }}</th>
+        <td>{{ i.date }}</td>
+        <td>{{ i.mobile }}</td>
+        <td>{{ i.fee }}</td>
+        <td>
+            {{ i.paid_status }}
+        </td>
+        <td>
             {% if i.paid_status == "UNPAID" %}
-                <form method="post" action="{% url 'update_payment' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="appointment_id" value="{{ i.id }}">
-                    <button type="submit" class="btn btn-primary">PAY</button>
-                </form>
+                {{ i.paid_status }}
             {% else %}
-                <i class="fas fa-check-circle text-success"></i>
+            <button class="btn btn-primary">FEEDBACK</button>
             {% endif %}
         </td>
-                                                    </tr>
+    </tr>
                                                 {% endfor %}
                                                 </tbody>
                                             </table>
@@ -393,82 +391,11 @@
                     </div>
                 </div>
 
-            {% endif %}
 
 
 
 
-            {% if not status %}
-                <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
-                      integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv"
-                      crossorigin="anonymous">
 
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-md-9">
-
-                            <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
-                                <h4 class="font-weight-bold mt-0 mb-4">AVALIABLE CONSULTANT</h4>
-                                <div class="tab-content" id="myTabContent">
-
-                                    {% for i in consultant %}
-                                        <div class="tab-pane  fade  active show" id="orders" role="tabpanel"
-                                             aria-labelledby="orders-tab">
-                                            <div class="bg-white card mb-4 order-list shadow-sm">
-                                                <div class="gold-members p-4">
-                                                    <a href="#">
-                                                    </a>
-                                                    <div class="media">
-                                                        <a href="#">
-                                                            <img class="mr-4"
-                                                                 src="{{ i.image.url }}"
-                                                                 alt="Generic placeholder image">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <a href="#">
-
-                                                        <span class="float-right text-info">Available for Consultation <i
-                                                                class="icofont-check-circled text-success"></i></span>
-                                                            </a>
-
-                                                            <h6 class="mb-2">
-                                                                <a href="#"></a>
-                                                                <a href="#" class="text-black">{{ i.name }}</a>
-                                                            </h6>
-                                                            <p class="text-gray mb-1"><i
-                                                                    class="icofont-location-arrow"></i>{{ i.address }}
-                                                            </p>
-                                                            <p class="text-gray mb-3"><i class="icofont-list"></i>
-                                                                Consultation
-                                                                {{ i.id }} <i class="icofont-clock-time ml-2"></i></p>
-                                                            <p class="text-dark">{{ i.specialist }}
-                                                            </p>
-                                                            <hr>
-                                                            <div class="float-right">
-                                                                <a class="btn btn-lg btn-primary book-appointment-btn"
-                                                                   href="#" data-doctor-name="{{ i.name }}"
-                                                                   data-doctor-fee="{{ i.consultation_fee }}">
-                                                                    <i class="icofont-refresh"></i>BOOK APPOINTMENT
-                                                                </a>
-                                                            </div>
-                                                            <p class="mb-0 text-black text-primary pt-2"><span
-                                                                    class="text-black font-weight-bold"> Consultation Fee: Rs</span>
-                                                                {{ i.consultation_fee|add:100 }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            {% endif %}
     </div>
 
 

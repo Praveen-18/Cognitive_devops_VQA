@@ -217,6 +217,9 @@
         }
 
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <div class="container-scroller">
@@ -248,11 +251,11 @@
                     </div>
                 </li>
             </ul>
-            {% if status %}
+            {% if not status %}
                 <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
                     <a class="nav-link" href="#" style="cursor: pointer">
-                        <i class="fas fa-wallet"> <span> {{ fees }}</span></i>
+                        <i class="fas fa-wallet"> <span> {{ amt }}</span></i>
                     </a>
 
                 </div>
@@ -370,15 +373,26 @@
         <td>{{ i.mobile }}</td>
         <td>{{ i.fee }}</td>
         <td>
-            {{ i.paid_status }}
+            {% if i.paid_status == "PAID" %}
+            <i class="fas fa-check-circle text-success"></i>
+                {% else %}
+                {{ i.paid_status }}
+            {% endif %}
+
+{#            {{ i.paid_status }}#}
         </td>
         <td>
-            {% if i.paid_status == "UNPAID" %}
-                {{ i.paid_status }}
-            {% else %}
-            <button class="btn btn-primary">FEEDBACK</button>
-            {% endif %}
-        </td>
+    {% if i.paid_status == "PAID" %}
+        {% if not i.feedback_submitted %}
+        <button class="btn btn-primary open-feedback-overlay" data-doctor="{{ i.doctor_name }}" data-fee="{{ i.fee }}">FEEDBACK</button>
+        {% else %}
+            <i class="fas fa-check-circle text-success"></i>
+
+        {% endif %}
+    {% else %}
+        {{ i.paid_status }}
+    {% endif %}
+</td>
     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -390,142 +404,111 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
     </div>
 
 
     {#    If the Doctor is logined    #}
 
-    {% if status %}
-        <div class="fixed-plus-icon">
-            <a href="{% url 'doctor_consultant' %}" class="btn btn-primary btn-lg custom-box-btn">
-                <i class="mdi mdi-plus"></i>
-            </a>
-        </div>
-
-    {% endif %}
 
     </div>
 
-<div id="appointmentOverlay" class="overlay">
+
+
+<div id="feedbackOverlay" class="overlay">
     <div class="overlay-content">
-        <form action="{% url 'consultant' %}" method="post" id="appointmentForm">
+        <br>
+        <h5 style="text-align: center;">Leave Feedback</h5>
+        <br>
+        <form id="feedbackForm" method="post" action="{% url 'feedback_submit' %}">
             {% csrf_token %}
             <input type="hidden" id="doctorName" name="doctor_name" value="">
             <input type="hidden" id="doctorFee" name="doctor_fee" value="">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="hidden" class="form-control form-control-lg border-left-1" id="exampleInputName"
-                           placeholder="DR NAME" name="name">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="hidden" class="form-control form-control-lg border-left-1" id="exampleInputFee"
-                           placeholder="DR NAME" name="fee">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputMobileNumber">NAME</label>
-                <div class="input-group">
-                    <input type="tel" class="form-control form-control-lg border-left-1" placeholder="NAME"
-                           name="name1">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputMobileNumber">MOBILE NUMBER</label>
-                <div class="input-group">
-                    <input type="tel" class="form-control form-control-lg border-left-1" id="exampleInputMobileNumber"
-                           placeholder="Mobile Number" name="mobile_number">
-                </div>
-            </div>
-            <div class="my-3">
-                <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SUBMIT
-                </button>
-            </div>
+
+
+            <label for="ratingStars" style="justify-content: center">FEEDBACK : </label>
+            <br>
+            <textarea id="feedbackText" name="feedback_text" placeholder="Enter your feedback"></textarea>
+            <br>
+            <br>
+            <label for="ratingStars">RATING : </label>
+            <br>
+            <input type="number" name="doctor_rating12" min="0" max="5" step="1">
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
-
-        <button id="closeOverlayBtn" class="close-overlay-btn">
+        <button id="closeFeedbackOverlayBtn" class="close-overlay-btn">
             <i class="fas fa-times"></i>
         </button>
     </div>
-
 </div>
 
 
-
-
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const bookAppointmentBtn = document.querySelector('#bookAppointmentBtn');
-        const appointmentOverlay = document.querySelector('#appointmentOverlay');
-        const closeOverlayBtn = document.querySelector('#closeOverlayBtn');
+document.addEventListener('DOMContentLoaded', function () {
+    const openFeedbackOverlayButtons = document.querySelectorAll('.open-feedback-overlay');
+    const feedbackOverlay = document.getElementById('feedbackOverlay');
+    const doctorNameInput = document.getElementById('doctorName');
+    const doctorFeeInput = document.getElementById('doctorFee');
+    const closeFeedbackOverlayBtn = document.getElementById('closeFeedbackOverlayBtn');
 
-        bookAppointmentBtn.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent the default behavior of the anchor link
-            appointmentOverlay.style.display = 'block';
-        });
-
-        closeOverlayBtn.addEventListener('click', function () {
-            appointmentOverlay.style.display = 'none';
-        });
+    openFeedbackOverlayButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            console.log('Button clicked!');  // Add this line
+            const doctorName = this.getAttribute('data-doctor');
+            const doctorFee = this.getAttribute('data-fee');
+            doctorNameInput.value = doctorName;
+            doctorFeeInput.value = doctorFee;
+            feedbackOverlay.style.display = 'block';
     });
+});
+
+    closeFeedbackOverlayBtn.addEventListener('click', function () {
+        feedbackOverlay.style.display = 'none';
+    });
+});
 </script>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const bookAppointmentBtns = document.querySelectorAll('.book-appointment-btn');
-        const appointmentOverlay = document.querySelector('#appointmentOverlay');
-        const closeOverlayBtn = document.querySelector('#closeOverlayBtn');
-        const appointmentForm = document.querySelector('#appointmentForm');
-        const outputContainer = document.querySelector('#outputContainer');
-        const outputName = document.querySelector('#outputName');
-        const outputMobileNumber = document.querySelector('#outputMobileNumber');
-        const doctorNameInput = document.querySelector('#doctorName'); // Hidden input field for doctor's name
-        const doctorFeeInput = document.querySelector('#doctorFee'); // Hidden input field for doctor's fee
-        console.log(doctorFeeInput);
+document.addEventListener('DOMContentLoaded', function () {
+    const openFeedbackOverlayButtons = document.querySelectorAll('.open-feedback-overlay');
+    const feedbackOverlay = document.getElementById('feedbackOverlay');
+    const doctorNameInput = document.getElementById('doctorName');
+    const doctorFeeInput = document.getElementById('doctorFee');
+    const closeFeedbackOverlayBtn = document.getElementById('closeFeedbackOverlayBtn');
 
-        bookAppointmentBtns.forEach(function (bookAppointmentBtn) {
-            bookAppointmentBtn.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent the default behavior of the anchor link
-                // Get the doctor's name from the data attribute
-                const doctorName = bookAppointmentBtn.getAttribute('data-doctor-name');
-                const doctorFee = bookAppointmentBtn.getAttribute('data-doctor-fee');
-                console.log(doctorFee);
-                console.log(doctorName);
-                // Set the doctor's name in the hidden input field
-                doctorNameInput.value = doctorName;
-                doctorFeeInput.value = doctorFee;
-                // Set the "Name" field based on the user's input (if any)
-                const nameInput = document.querySelector('#exampleInputName');
-                const feeInput = document.querySelector('#exampleInputFee');
-                if (feeInput.value.trim() === '') {
-                    feeInput.value = doctorFee;
-                }
-                if (nameInput.value.trim() === '') {
-                    nameInput.value = doctorName;
-                }
-                // Show the appointment overlay
-                appointmentOverlay.style.display = 'block';
-            });
-        });
-
-        closeOverlayBtn.addEventListener('click', function () {
-            // Hide the appointment overlay when the close button is clicked
-            appointmentOverlay.style.display = 'none';
-            // Clear the output container
-            outputContainer.style.display = 'none';
-            outputName.textContent = '';
-            outputMobileNumber.textContent = '';
+    openFeedbackOverlayButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const doctorName = this.getAttribute('data-doctor');
+            const doctorFee = this.getAttribute('data-fee');
+            doctorNameInput.value = doctorName;
+            doctorFeeInput.value = doctorFee;
+            feedbackOverlay.style.display = 'block';
+            this.style.display = 'none';  // Hide the clicked button
         });
     });
+
+    closeFeedbackOverlayBtn.addEventListener('click', function () {
+        feedbackOverlay.style.display = 'none';
+    });
+
+    $("#ratingStars").rateYo({
+        rating: 0,
+        starWidth: "30px",
+        fullStar: true,
+        onChange: function (rating, rateYoInstance) {
+            $("#doctorRating").val(rating);
+        }
+    });
+
+    $("#feedbackForm").submit(function () {
+        // Now submit the form
+        return true;
+    });
+});
 </script>
 
 

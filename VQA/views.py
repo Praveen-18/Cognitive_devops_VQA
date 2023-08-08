@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Registration, Question, BloodDonation, Doctor_register, Consultant, Appointment_status, Blog
+from .models import Registration, Question, BloodDonation, Doctor_register, Consultant, Appointment_status, Blog, Feedback, User_Wallet
 from django.contrib.auth.models import User
 from .VQA_Image_Classifier.sample import answer_question, classify_image
 import json
@@ -12,11 +12,16 @@ import pandas as pd
 from fuzzywuzzy import fuzz
 from datetime import datetime
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 user_name = ""
 def index(request):
     name = request.user.username.upper()
-    return render(request, 'VQA/index.html', {'name': name})
+    if Doctor_register.objects.filter(name=request.user.username).exists():
+        status = True
+    else:
+        status = False
+    return render(request, 'VQA/index.html', {'name': name, 'status': status})
 
 
 def userlogin(request):
@@ -103,6 +108,10 @@ def separate_text_by_dot(text):
     return sentences
 
 def vqa(request):
+    if Doctor_register.objects.filter(name=request.user.username).exists():
+        status = True
+    else:
+        status = False
     if request.method == 'POST':
         questions = request.POST.get('questions')
         print(questions)
@@ -154,13 +163,17 @@ def vqa(request):
             if answer == "no":
                 answer = "Apologies! 🙇‍♂️ Our cognitive devops team is still sharpening the AI's knowledge, and unfortunately, it hasn't learned about this specific input yet. Feel free to explore other questions or images, and we'll strive to improve the AI's capabilities for next time!"
 
-            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1, 'question': questions, 'image_url': image_url, 'explanation': explain_str, 'answer1': answer})
+            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1, 'question': questions, 'image_url': image_url, 'explanation': explain_str, 'answer1': answer, 'status': status})
 
-    return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper()})
+    return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'status': status})
 
 
 
 def bmi_calculator(request):
+    if Doctor_register.objects.filter(name=request.user.username).exists():
+        status = True
+    else:
+        status = False
     if request.method == 'POST':
         print("Inside BMI")
         feet = float(request.POST.get('feet'))
@@ -177,7 +190,7 @@ def bmi_calculator(request):
         }
         return HttpResponse(json.dumps(result), content_type='application/json')
 
-    return render(request, 'VQA/BMI_Calculator.html', {'name': request.user.username.upper()})
+    return render(request, 'VQA/BMI_Calculator.html', {'name': request.user.username.upper(), 'status': status})
 
 
 
@@ -367,8 +380,47 @@ def doctor_consultant(request):
 
 def appointment_status(request):
     det = Appointment_status.objects.filter(name=request.user.username).all()
+    for doctor in det:
+        feedback_exists = Feedback.objects.filter(doctor_name=doctor.doctor_name,name=request.user.username).exists()
+        doctor.feedback_submitted = feedback_exists
+
     if Doctor_register.objects.filter(name=request.user.username).exists():
         status = True
     else:
         status = False
-    return render(request , 'vqa/bookappointment.html',{'name' : request.user.username.upper(),'det':det,'status':status})
+
+    feedback_submitted = Feedback.objects.filter(name=request.user.username).exists()
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
+
+
+    return render(request , 'vqa/bookappointment.html',{'name' : request.user.username.upper(),'det':det,'status':status,'amt':amt})
+
+
+
+def feedback_submit(request):
+    if request.method == 'POST':
+        doctor_name = request.POST.get('doctor_name')
+        doctor_fee = request.POST.get('doctor_fee')
+        feedback_text = request.POST.get('feedback_text')
+        doctor_rating = request.POST.get('doctor_rating12')
+        name = request.user.username
+        dat = Feedback(doctor_name=doctor_name, fee=doctor_fee, feedback=feedback_text,rating=doctor_rating , name=name)
+        dat.save()
+        try:
+            user_wallet = User_Wallet.objects.get(name=name)
+        except User_Wallet.DoesNotExist:
+            user_wallet = User_Wallet(name=name, wallet_amount=0)
+            user_wallet.save()
+
+            # Update wallet amount
+        user_wallet.wallet_amount += 10
+        user_wallet.save()
+
+
+        # Add your logic for saving feedback here
+        return redirect('appointment_status')
+    return render(request, 'VQA/bookappointment.html', {'name': request.user.username.upper()})

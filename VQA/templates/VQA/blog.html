@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .user-activity .media {
             position: relative;
@@ -247,6 +248,15 @@
                     </div>
                 </li>
             </ul>
+            {% if not status %}
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+                    <a class="nav-link" href="#" style="cursor: pointer">
+                        <i class="fas fa-wallet"> <span> {{ amt }}</span></i>
+                    </a>
+
+                </div>
+            {% endif %}
 
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">

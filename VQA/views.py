@@ -17,11 +17,16 @@ from django.views.decorators.http import require_POST
 user_name = ""
 def index(request):
     name = request.user.username.upper()
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
     if Doctor_register.objects.filter(name=request.user.username).exists():
         status = True
     else:
         status = False
-    return render(request, 'VQA/index.html', {'name': name, 'status': status})
+    return render(request, 'VQA/index.html', {'name': name, 'status': status,'amt':amt})
 
 
 def userlogin(request):
@@ -112,6 +117,11 @@ def vqa(request):
         status = True
     else:
         status = False
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
     if request.method == 'POST':
         questions = request.POST.get('questions')
         print(questions)
@@ -163,9 +173,9 @@ def vqa(request):
             if answer == "no":
                 answer = "Apologies! 🙇‍♂️ Our cognitive devops team is still sharpening the AI's knowledge, and unfortunately, it hasn't learned about this specific input yet. Feel free to explore other questions or images, and we'll strive to improve the AI's capabilities for next time!"
 
-            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1, 'question': questions, 'image_url': image_url, 'explanation': explain_str, 'answer1': answer, 'status': status})
+            return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'answer': answer1, 'question': questions, 'image_url': image_url, 'explanation': explain_str, 'answer1': answer, 'status': status,'amt':amt})
 
-    return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'status': status})
+    return render(request, 'VQA/Visual_Q&A.html', {'name': request.user.username.upper(), 'status': status,'amt':amt})
 
 
 
@@ -174,6 +184,11 @@ def bmi_calculator(request):
         status = True
     else:
         status = False
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
     if request.method == 'POST':
         print("Inside BMI")
         feet = float(request.POST.get('feet'))
@@ -190,7 +205,7 @@ def bmi_calculator(request):
         }
         return HttpResponse(json.dumps(result), content_type='application/json')
 
-    return render(request, 'VQA/BMI_Calculator.html', {'name': request.user.username.upper(), 'status': status})
+    return render(request, 'VQA/BMI_Calculator.html', {'name': request.user.username.upper(), 'status': status,'amt':amt})
 
 
 
@@ -219,6 +234,11 @@ def blog(request):
         status = True
     else:
         status = False
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
     doctor = Doctor_register.objects.values_list('name', flat=True)
     if request.method == 'POST':
         print("Inside blog")
@@ -240,16 +260,23 @@ def blog(request):
         return JsonResponse({'message':'yes','status':status, 'doctor': list(doctor)})
 
     return render(request, 'VQA/blog.html',
-                  {'name': request.user.username.upper(), 'blog': Blog.objects.all().order_by('-id'),'status':status, 'doctor': list(doctor)})
+                  {'name': request.user.username.upper(), 'blog': Blog.objects.all().order_by('-id'),'status':status, 'doctor': list(doctor),'amt':amt})
 
 def consultant(request):
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
+    rating = Feedback.objects.filter(name=request.user.username).all()
     if Doctor_register.objects.filter(name=request.user.username).exists():
         appointments = Appointment_status.objects.filter(doctor_name=request.user.username)
         fees = 0
+
         for appointment in appointments:
             fees += int(appointment.fee)
 
-        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'status': True, 'appointments': appointments,'fees':fees})
+        return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'status': True, 'appointments': appointments,'fees':fees,'amt':amt})
     else:
         if request.method == 'POST':
             doctor_name = request.POST.get('doctor_name')
@@ -263,7 +290,7 @@ def consultant(request):
             val = Appointment_status(name=name, mobile=mobile_number, doctor_name=doctor_name, date=current_date_str, fee=fee,paid_status=status)
             val.save()
             return redirect('consultant')
-    return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'consultant': Consultant.objects.all()})
+    return render(request, 'VQA/consultant.html', {'name': request.user.username.upper(), 'consultant': Consultant.objects.all(),'rating':rating,'amt':amt})
 
 
 def update_payment(request):
@@ -277,6 +304,17 @@ def update_payment(request):
 
 
 def blooddonation(request):
+    try:
+        user_wallet = User_Wallet.objects.get(name=request.user.username)
+        amt = user_wallet.wallet_amount
+    except User_Wallet.DoesNotExist:
+        amt = 0
+
+    if Doctor_register.objects.filter(name=request.user.username).exists():
+        status = True
+    else:
+        status = False
+
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -287,8 +325,8 @@ def blooddonation(request):
         val = BloodDonation(name=name, email=email, blood_group=bloodgroup, mobile=phonenumber, address=address)
         val.save()
         print(val)
-        return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper()})
-    return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper()})
+        return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper(),'status':status,'amt':amt})
+    return render(request, 'VQA/blooddonation.html', {'name': request.user.username.upper(),'status':status,'amt':amt})
 
 def video_feed(request):
     return StreamingHttpResponse(imageCapture(VideoCamera() , "Praveen S" , 1), content_type='multipart/x-mixed-replace; boundary=frame')

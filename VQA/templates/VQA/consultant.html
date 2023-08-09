@@ -19,6 +19,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{% static 'images/favicon-3.png' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
 
@@ -257,6 +258,15 @@
 
                 </div>
             {% endif %}
+            {% if not status %}
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+                    <a class="nav-link" href="#" style="cursor: pointer">
+                        <i class="fas fa-wallet"> <span> {{ amt }}</span></i>
+                    </a>
+
+                </div>
+            {% endif %}
 
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
@@ -402,7 +412,6 @@
                 <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css"
                       integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv"
                       crossorigin="anonymous">
-
                 <div class="container">
                     <div class="row">
 
@@ -444,7 +453,7 @@
                                                                 {{ i.id }} <i class="icofont-clock-time ml-2"></i></p>
                                                             <p class="text-dark">{{ i.specialist }}
                                                             </p>
-                                                            <hr>
+                                                            <br>
                                                             <div class="float-right">
                                                                 <a class="btn btn-lg btn-primary book-appointment-btn"
                                                                    href="#" data-doctor-name="{{ i.name }}"

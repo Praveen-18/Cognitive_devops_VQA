@@ -438,96 +438,143 @@
 
 
 <script>
+    {#const userStatus = {{ status|yesno:"true,false" }};#}
+    {#document.addEventListener("DOMContentLoaded", function () {#}
+    {#    const postButton = document.querySelector(".custom-box-btn");#}
+    {#    const overlay = document.getElementById("overlay");#}
+    {##}
+    {#    postButton.addEventListener("click", function () {#}
+    {#        overlay.style.display = "block";#}
+    {#    });#}
+    {##}
+    {#    .then(data => {#}
+    {#        if (data.message === 'yes') {#}
+    {#            console.log("Data submitted successfully. New blog ID:", data.new_blog_id);#}
+    {#            console.log("Status:", userStatus);#}
+    {#            window.location.reload();#}
+    {#        }#}
+    {#    })#}
+    {##}
+    {##}
+    {##}
+    {#    overlay.addEventListener("click", function (event) {#}
+    {#        if (event.target === overlay) {#}
+    {#            overlay.style.display = "none";#}
+    {#        }#}
+    {#    });#}
+    {##}
+    {#    const form = document.getElementById("postForm");#}
+    {#    form.addEventListener("submit", function (event) {#}
+    {#        event.preventDefault();#}
+    {#        const formData = new FormData(form);#}
+    {#        sendDataToServer(formData);#}
+    {#    });#}
+    {##}
+    {#    function sendDataToServer(formData) {#}
+    {#        fetch("{% url 'blog' %}", {#}
+    {#            method: "POST",#}
+    {#            body: formData,#}
+    {#            headers: {#}
+    {#                "X-CSRFToken": "{{ csrf_token }}",#}
+    {#            },#}
+    {#        })#}
+    {#            .then(response => response.json())#}
+    {#            .then(data => {#}
+    {#                console.log("Data submitted successfully:", data);#}
+    {#                window.location.reload();#}
+    {#                overlay.style.display = "none"; // Hide the overlay after successful submission#}
+    {#            })#}
+    {#            .catch(error => {#}
+    {#                console.error("Error submitting data:", error);#}
+    {#                // Handle errors here if necessary#}
+    {#            });#}
+    {#    }#}
+    {#});#}
+document.addEventListener("DOMContentLoaded", function () {
     const userStatus = {{ status|yesno:"true,false" }};
-    document.addEventListener("DOMContentLoaded", function () {
-        const postButton = document.querySelector(".custom-box-btn");
-        const overlay = document.getElementById("overlay");
+    const postButton = document.querySelector(".custom-box-btn");
+    const overlay = document.getElementById("overlay");
 
-        postButton.addEventListener("click", function () {
-            overlay.style.display = "block";
-        });
+    postButton.addEventListener("click", function () {
+        overlay.style.display = "block";
+    });
 
-        .then(data => {
-            if (data.message === 'yes') {
-                console.log("Data submitted successfully. New blog ID:", data.new_blog_id);
-                console.log("Status:", userStatus);
-                window.location.reload();
-            }
+    overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) {
+            overlay.style.display = "none";
+        }
+    });
+
+    const form = document.getElementById("postForm");
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        sendDataToServer(formData);
+    });
+
+    function sendDataToServer(formData) {
+        fetch("{% url 'blog' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
         })
-
-
-
-        overlay.addEventListener("click", function (event) {
-            if (event.target === overlay) {
-                overlay.style.display = "none";
-            }
-        });
-
-        const form = document.getElementById("postForm");
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const formData = new FormData(form);
-            sendDataToServer(formData);
-        });
-
-        function sendDataToServer(formData) {
-            fetch("{% url 'blog' %}", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Data submitted successfully:", data);
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'yes') {
+                    console.log("Data submitted successfully. New blog ID:", data.new_blog_id);
+                    console.log("Status:", userStatus);
                     window.location.reload();
-                    overlay.style.display = "none"; // Hide the overlay after successful submission
-                })
-                .catch(error => {
-                    console.error("Error submitting data:", error);
-                    // Handle errors here if necessary
-                });
-        }
-    });
-</script>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get all elements with class 'time-ago'
-        const timeAgoElements = document.querySelectorAll(".time-ago");
-
-        // Function to calculate and update time ago for each element
-        function updateTimeAgo() {
-            timeAgoElements.forEach(function (element) {
-                const postTime = new Date(element.textContent);
-                const currentTime = new Date();
-                const timeDifferenceInSeconds = Math.floor((currentTime - postTime) / 1000);
-
-                let timeAgo = "";
-                if (timeDifferenceInSeconds < 60) {
-                    timeAgo = `${timeDifferenceInSeconds} seconds ago`;
-                } else if (timeDifferenceInSeconds < 3600) {
-                    const minutes = Math.floor(timeDifferenceInSeconds / 60);
-                    timeAgo = `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
-                } else if (timeDifferenceInSeconds < 86400) {
-                    const hours = Math.floor(timeDifferenceInSeconds / 3600);
-                    timeAgo = `${hours} hour${hours === 1 ? '' : 's'} ago`;
-                } else {
-                    const days = Math.floor(timeDifferenceInSeconds / 86400);
-                    timeAgo = `${days} day${days === 1 ? '' : 's'} ago`;
                 }
-
-                element.textContent = timeAgo;
+            })
+            .catch(error => {
+                console.error("Error submitting data:", error);
+                // Handle errors here if necessary
             });
-        }
+    }
+});
 
-        // Update time ago every minute
-        setInterval(updateTimeAgo, 60000); // 60,000 milliseconds = 1 minute
-        updateTimeAgo(); // Call the function once initially to set the initial time ago
-    });
+
+
 </script>
+
+{##}
+{#<script>#}
+{#    document.addEventListener("DOMContentLoaded", function () {#}
+{#        // Get all elements with class 'time-ago'#}
+{#        const timeAgoElements = document.querySelectorAll(".time-ago");#}
+{##}
+{#        // Function to calculate and update time ago for each element#}
+{#        function updateTimeAgo() {#}
+{#            timeAgoElements.forEach(function (element) {#}
+{#                const postTime = new Date(element.textContent);#}
+{#                const currentTime = new Date();#}
+{#                const timeDifferenceInSeconds = Math.floor((currentTime - postTime) / 1000);#}
+{##}
+{#                let timeAgo = "";#}
+{#                if (timeDifferenceInSeconds < 60) {#}
+{#                    timeAgo = `${timeDifferenceInSeconds} seconds ago`;#}
+{#                } else if (timeDifferenceInSeconds < 3600) {#}
+{#                    const minutes = Math.floor(timeDifferenceInSeconds / 60);#}
+{#                    timeAgo = `${minutes} minute${minutes === 1 ? '' : 's'} ago`;#}
+{#                } else if (timeDifferenceInSeconds < 86400) {#}
+{#                    const hours = Math.floor(timeDifferenceInSeconds / 3600);#}
+{#                    timeAgo = `${hours} hour${hours === 1 ? '' : 's'} ago`;#}
+{#                } else {#}
+{#                    const days = Math.floor(timeDifferenceInSeconds / 86400);#}
+{#                    timeAgo = `${days} day${days === 1 ? '' : 's'} ago`;#}
+{#                }#}
+{##}
+{#                element.textContent = timeAgo;#}
+{#            });#}
+{#        }#}
+{##}
+{#        // Update time ago every minute#}
+{#        setInterval(updateTimeAgo, 60000); // 60,000 milliseconds = 1 minute#}
+{#        updateTimeAgo(); // Call the function once initially to set the initial time ago#}
+{#    });#}
+{#</script>#}
 
 
 

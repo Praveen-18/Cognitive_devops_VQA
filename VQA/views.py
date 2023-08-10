@@ -244,7 +244,12 @@ def blog(request):
         print("Inside blog")
         name = request.user.username.upper()
         if Doctor_register.objects.filter(name=request.user.username).exists():
-            image = Consultant.objects.get(name=request.user.username).image
+            consultant = Consultant.objects.filter(
+                name=request.user.username).first()  # Get the first matching consultant
+            if consultant:
+                image = consultant.image
+            else:
+                image = "VQA/static/images/user.png"
         else:
             image = "VQA/static/images/user.png"
         post_image = request.FILES.get('post_image')
